@@ -1,5 +1,7 @@
 package top.guokaicn.tools.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -39,15 +41,24 @@ public class JSONUtilsTest
 	@Test
 	public void stringToJsonObject()
 	{
+		JsonNode node = JSONUtils.stringToJsonObject("[\"123\",\"sdf\"]");
+
+		System.out.println(node);
 	}
 
 	@Test
 	public void createObjectNode()
 	{
+		JsonNode node =  JSONUtils.createObjectNode();
+
+		System.out.println(node);
 	}
 
 	@Test
 	public void createArrayNode()
 	{
+		ArrayNode array = JSONUtils.createArrayNode();
+
+		System.out.println(array);
 	}
 }
