@@ -62,8 +62,6 @@ public class SystemUtils
 
 	/**
 	 * 获取java的版本
-	 * 
-	 * @return
 	 */
 	public static String getJavaVersion()
 	{
@@ -88,12 +86,35 @@ public class SystemUtils
 
 	/**
 	 * 获取文件分隔符
-	 * 
-	 * @return
 	 */
 	public static String getFileSeparator()
 	{
 		return System.getProperty("file.separator");
+	}
+
+	/**
+	 * 通过文件分隔符来连接文件路径
+	 * @param paths 路径数据
+	 * @return 结果
+	 */
+	public static String joinFileSeparator (String... paths)
+	{
+		StringBuilder result = new StringBuilder();
+
+		if(paths != null && paths.length>0)
+		{
+			for(int i=0;i<paths.length;i++)
+			{
+				result.append(paths[i]);
+
+				if(i < paths.length-1)
+				{
+					result.append(getFileSeparator());
+				}
+			}
+		}
+
+		return result.toString();
 	}
 
 	/**
@@ -122,8 +143,6 @@ public class SystemUtils
 
 	/**
 	 * 获取机器HOST
-	 * 
-	 * @return
 	 */
 	public static String getHostName()
 	{
@@ -145,8 +164,6 @@ public class SystemUtils
 
 	/**
 	 * 获取机器IP地址
-	 * 
-	 * @return
 	 */
 	public static String getHostIP()
 	{
