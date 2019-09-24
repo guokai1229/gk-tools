@@ -1,11 +1,17 @@
 package top.guokaicn.tools.utils;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class FormatUtils
 {
+	/**
+	 * 把字符串转换为boolean，如果为空，则默认为false
+	 * @param str 字符串
+	 * @return 结果
+	 */
 	public static boolean toBoolean(String str)
 	{
 		if(str == null || str.trim().equals(""))
@@ -53,26 +59,33 @@ public class FormatUtils
 	 */
 	public static boolean isInt(String... strings)
 	{
-		for(String str : strings)
+		if(strings != null && strings.length>0)
 		{
-			if(str == null || str.trim().equals(""))
+			for(String str : strings)
+			{
+				if(str == null || str.trim().equals(""))
+				{
+					return false;
+				}
+			}
+			try
+			{
+				for (String str : strings)
+				{
+					Integer.parseInt(str);
+				}
+			}
+			catch (NumberFormatException e)
 			{
 				return false;
 			}
+
+			return true;
 		}
-		try
-		{
-			for (String str : strings)
-			{
-				Integer.parseInt(str);
-			}
-		}
-		catch (NumberFormatException e)
+		else
 		{
 			return false;
 		}
-
-		return true;
 	}
 
 	/**
@@ -105,33 +118,106 @@ public class FormatUtils
 	}
 
 	/**
-	 * 多个字符串参数，是否为INT型的字符
+	 * 多个字符串参数，是否为long型的字符
 	 *
 	 * @param strings 参数
 	 * @return 值
 	 */
 	public static boolean isLong(String... strings)
 	{
-		for(String str : strings)
+		if(strings != null && strings.length>0)
 		{
-			if(str == null || str.trim().equals(""))
+			for(String str : strings)
+			{
+				if(str == null || str.trim().equals(""))
+				{
+					return false;
+				}
+			}
+			try
+			{
+				for (String str : strings)
+				{
+					Long.parseLong(str);
+				}
+			}
+			catch (NumberFormatException e)
 			{
 				return false;
 			}
+
+			return true;
 		}
-		try
-		{
-			for (String str : strings)
-			{
-				Long.parseLong(str);
-			}
-		}
-		catch (NumberFormatException e)
+		else
 		{
 			return false;
 		}
+	}
 
-		return true;
+	/**
+	 * 把字符串转换为double，如果为空，则默认为-1
+	 *
+	 * @param str 字符串
+	 * @return 值
+	 */
+	public static double toDouble(String str)
+	{
+		return toDouble(str,-1.0);
+	}
+
+	/**
+	 * 把字符串转换为double，如果为空，则使用默认值
+	 * @param str 字符串
+	 * @param defaultvalue 默认值
+	 * @return 值
+	 */
+	public static double toDouble(String str,double defaultvalue)
+	{
+		if (!isDouble(str))
+		{
+			return defaultvalue;
+		}
+		else
+		{
+			return Double.parseDouble(str);
+		}
+	}
+
+	/**
+	 * 多个字符串参数，是否为double型的字符
+	 *
+	 * @param strings 参数
+	 * @return 值
+	 */
+	public static boolean isDouble(String... strings)
+	{
+		if(strings != null && strings.length>0)
+		{
+			for(String str : strings)
+			{
+				if(str == null || str.trim().equals(""))
+				{
+					return false;
+				}
+			}
+			try
+			{
+				for (String str : strings)
+				{
+					Double.parseDouble(str);
+				}
+			}
+			catch (NumberFormatException e)
+			{
+				return false;
+			}
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -173,9 +259,9 @@ public class FormatUtils
 	 * @param list list对象
 	 * @return 结果
 	 */
-	public static String listToString(List<String> list)
+	public static String listToString(Collection<String> list)
 	{
-		return listToString(list,",");
+		return listToString(list,',');
 	}
 
 	/**
@@ -184,7 +270,7 @@ public class FormatUtils
 	 * @param separator 分隔符
 	 * @return 结果
 	 */
-	public static String listToString(List<String> list, String separator)
+	public static String listToString(Collection<String> list, Character separator)
 	{
 		StringBuilder sb = new StringBuilder();
 
@@ -196,38 +282,25 @@ public class FormatUtils
 	}
 
 	/**
-	 * 将map集合里的value字符串用expr分隔符连接，返回字符串
-	 * @param map map对象
-	 * @param separator 分隔符
-	 * @return 结果
+	 * 将字符串转换为list对象
+	 * @param str 字符串对象
+	 * @return list对象
 	 */
-	public static String mapValueToString(Map<String, String> map, String separator)
+	public static List<String> stringToList(String str)
 	{
-		StringBuilder sb = new StringBuilder();
-
-		for(Map.Entry<String, String> entry : map.entrySet())
-		{
-			sb.append(entry.getValue()).append(separator);
-		}
-
-		return sb.toString().substring(0, sb.toString().length() - 1);
+		return stringToList(str,',');
 	}
 
 	/**
-	 * 将map集合里的key字符串用expr分隔符连接，返回字符串
-	 * @param map map对象
+	 * 根据分隔符将字符串转换为list对象
+	 * @param str 字符串对象
 	 * @param separator 分隔符
-	 * @return 结果
+	 * @return list对象
 	 */
-	public static String mapKeyToString(Map<String, String> map, String separator)
+	public static List<String> stringToList(String str,Character separator)
 	{
-		StringBuilder sb = new StringBuilder();
+		String[] data = str.split(separator.toString());
 
-		for(Map.Entry<String, String> entry : map.entrySet())
-		{
-			sb.append(entry.getKey()).append(separator);
-		}
-
-		return sb.toString().substring(0, sb.toString().length() - 1);
+		return Arrays.asList(data);
 	}
 }
