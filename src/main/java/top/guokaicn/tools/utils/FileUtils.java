@@ -1,6 +1,9 @@
 package top.guokaicn.tools.utils;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 文件相关工具类
@@ -16,163 +19,283 @@ public class FileUtils
 	 * @param folderPath 文件夹路径
 	 * @return String
 	 */
-	public static String createFolder(String folderPath)
+	public static boolean createFolder(String folderPath)
 	{
+		boolean result = true;
+
 		try
 		{
 			File myFilePath = new File(folderPath);
 
 			if (!myFilePath.exists())
 			{
-				myFilePath.mkdir();
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return folderPath;
-	}
-
-	/**
-	 * 创建filePathAndName文件
-	 *
-	 * @param filePathAndName
-	 *            文件路径及名称例如：D:\\xxx.txt"
-	 */
-	public static FileWriter createFile(String filePathAndName)
-	{
-		try
-		{
-			String filePath = filePathAndName;
-
-			File myFilePath = new File(filePath);
-
-			if (!myFilePath.exists())
-			{
-				myFilePath.createNewFile();
-			}
-
-			FileWriter resultFile = new FileWriter(myFilePath);
-
-			return resultFile;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * 创建filePathAndName文件
-	 *
-	 * @param filePathAndName
-	 *            文件路径及名称例如：D:\\xxx.txt"
-	 * @param encoding
-	 *            文件编码
-	 */
-	public static Writer createFile(String filePathAndName, String encoding)
-	{
-		try
-		{
-			String filePath = filePathAndName;
-
-			File myFilePath = new File(filePath);
-
-			if (!myFilePath.exists())
-			{
-				myFilePath.createNewFile();
-			}
-
-			Writer resultFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(myFilePath), encoding));
-
-			return resultFile;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * 创建filePathAndName文件，并且用encoding字符格式写入fileContent内容
-	 *
-	 * @param filePathAndName
-	 *            文件路径及名称
-	 * @param fileContent
-	 *            文件内容
-	 * @param encoding
-	 *            编码格式：例如：GBK 或 UTF-8
-	 */
-	public static void createFile(String filePathAndName, String fileContent, String encoding)
-	{
-		try
-		{
-			String filePath = filePathAndName;
-			File myFilePath = new File(filePath);
-			if (!myFilePath.exists())
-			{
-				myFilePath.createNewFile();
-			}
-			PrintWriter myFile = new PrintWriter(myFilePath, encoding);
-			String strContent = fileContent;
-			myFile.println(strContent);
-			myFile.close();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 创建filePathAndName文件并且父路径如果不存在，也一起创建
-	 *
-	 */
-	public static void createFileAlways(String filePathAndName)
-	{
-		try
-		{
-			String filePath = filePathAndName;
-			File myFilePath = new File(filePath);
-
-			if (!myFilePath.getParentFile().exists())
-			{
-				// 如果目标文件所在的目录不存在，则创建父目录
-				if (!myFilePath.getParentFile().mkdirs())
+				if (!myFilePath.getParentFile().exists())
 				{
-					throw new IllegalArgumentException("父目录不存在");
+					result = createFolder(myFilePath.getParentFile().getPath());
+				}
+
+				if(result)
+				{
+					result = myFilePath.mkdir();
 				}
 			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 
-			if (!myFilePath.exists())
+			result = false;
+		}
+
+		return result;
+	}
+
+	/**
+	 * 创建filePathAndName文件
+	 * @param filePathAndName 文件路径及名称例如：D:\\xxx.txt"
+	 * @return 文件
+	 */
+	public static File createFile(String filePathAndName)
+	{
+		File result = null;
+
+		try
+		{
+			File myFilePath = new File(filePathAndName);
+
+			boolean created = true;
+
+			if(!myFilePath.getParentFile().exists())
 			{
-				myFilePath.createNewFile();
+				created = createFolder(myFilePath.getParentFile().getPath());
+			}
+
+			if(created)
+			{
+				if (!myFilePath.exists())
+				{
+					if(myFilePath.createNewFile())
+					{
+						result = myFilePath;
+					}
+				}
+				else
+				{
+					result = myFilePath;
+				}
 			}
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+
+		return result;
+	}
+
+	/**
+	 * 根据内容创建文件
+	 * @param filePathAndName 文件路径
+	 * @param content 内容
+	 * @return 文件对象
+	 */
+	public static File createFile(String filePathAndName,String content)
+	{
+		return createFile(filePathAndName, content,SystemUtils.getSystemCharset());
+	}
+
+	/**
+	 * 根据内容创建文件
+	 * @param filePathAndName 文件路径
+	 * @param content 内容
+	 * @param encoding 编码
+	 * @return 文件对象
+	 */
+	public static File createFile(String filePathAndName,String content,String encoding)
+	{
+		File file  = createFile(filePathAndName);
+
+		if(file != null)
+		{
+			Writer writer = getFileWriter(file, encoding,false);
+
+			if(writer != null)
+			{
+				try
+				{
+					writer.write(content);
+					writer.flush();
+					writer.close();
+
+					return file;
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * 创建filePathAndName文件
+	 *
+	 * @param filePathAndName
+	 *            文件路径及名称例如：D:\\xxx.txt"
+	 * @param append
+	 *            是否追加
+	 */
+	public static BufferedWriter getFileWriter(String filePathAndName,boolean append)
+	{
+		try
+		{
+			File file = createFile(filePathAndName);
+
+			if(file != null)
+			{
+				return getFileWriter(file,SystemUtils.getSystemCharset(),append);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 创建filePathAndName文件
+	 *
+	 * @param file
+	 *            文件
+	 * @param encoding
+	 *            文件编码
+	 * @param append
+	 *            是否追加
+	 */
+	public static BufferedWriter getFileWriter(File file, String encoding,boolean append)
+	{
+		try
+		{
+			if(file != null && file.exists())
+			{
+				return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,append), encoding));
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 读取文件，返回读取文件管道对象
+	 * @param filePathAndName 文件路径
+	 * @return 数据
+	 */
+	public static BufferedReader getFileReader(String filePathAndName)
+	{
+		return getFileReader(filePathAndName,SystemUtils.getSystemCharset());
+	}
+
+	/**
+	 * 用encoding字符格式读取文件，返回读取文件管道对象
+	 * @param filePathAndName 文件路径
+	 * @param encoding 编码
+	 * @return 数据
+	 */
+	public static BufferedReader getFileReader(String filePathAndName, String encoding)
+	{
+		try
+		{
+			File file = new File(filePathAndName);
+
+			return getFileReader(file,encoding);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 用encoding字符格式读取文件，返回读取文件管道对象
+	 * @param file 文件
+	 * @param encoding 编码
+	 * @return 结果
+	 */
+	public static BufferedReader getFileReader(File file, String encoding)
+	{
+		try
+		{
+			if(file != null && file.exists())
+			{
+				return new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * 读取文件作为字节数组
+	 * @param filePathAndName 文件路径
+	 * @return 数据
+	 */
+	public static byte[] getFileBytes(String filePathAndName)
+	{
+		byte[] result = new byte[0];
+
+		File file = new File(filePathAndName);
+
+		try
+		{
+			if(file.exists())
+			{
+				FileInputStream in = new FileInputStream(file);
+
+				result =  IOUtils.toByteArray(in);
+
+				in.close();
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	/**
 	 * 返回路径下的所有文件列表
 	 *
-	 * @param filepath
-	 * @return File[]
+	 * @param filePath 文件路径
+	 * @return List<File>
 	 */
-	public static File[] getFileList(String filepath)
+	public static List<File> getFileList(String filePath)
 	{
-		File list[] = null;
-		File d = new File(filepath);
+		List<File> result = new ArrayList<>();
+
+		File d = new File(filePath);
+
 		if (d.exists())
 		{
-			list = d.listFiles();
+			if(d.listFiles() != null)
+			{
+				result = Arrays.asList(d.listFiles());
+			}
 		}
-		return list;
+
+		return result;
 	}
 
 	/**
@@ -182,31 +305,54 @@ public class FileUtils
 	 *            文件路径及名称
 	 * @return Boolean
 	 */
-	public static boolean delFile(String filePathAndName)
+	public static boolean deleteFile(String filePathAndName)
 	{
-		boolean bea = false;
+		boolean result = false;
+
 		try
 		{
-			String filePath = filePathAndName;
-
-			File myDelFile = new File(filePath);
+			File myDelFile = new File(filePathAndName);
 
 			if (myDelFile.exists())
 			{
-				myDelFile.delete();
-
-				bea = true;
-			}
-			else
-			{
-				bea = false;
+				result = myDelFile.delete();
 			}
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return bea;
+
+		return result;
+	}
+
+	/**
+	 * 删除所有文件
+	 *
+	 * @param folderPath
+	 *            路径
+	 * @return 是否成功
+	 */
+	public static boolean deleteAllFile(String folderPath)
+	{
+		boolean result = false;
+
+		List<File> file_list = getFileList(folderPath);
+
+		for(File file:file_list)
+		{
+			if(file.exists())
+			{
+				if(file.isDirectory())
+				{
+					deleteAllFile(file.getPath());
+				}
+
+				result = file.delete();
+			}
+		}
+
+		return result;
 	}
 
 	/**
@@ -214,96 +360,48 @@ public class FileUtils
 	 *
 	 * @param folderPath
 	 *            文件路径
+	 * @return Boolean
 	 */
-	public static void delFolder(String folderPath)
+	public static boolean deleteFolder(String folderPath)
 	{
+		boolean result = false;
+
 		try
 		{
-			delAllFile(folderPath);
-			String filePath = folderPath;
-			File myFilePath = new File(filePath);
-			myFilePath.delete();
+			result = deleteAllFile(folderPath);
+			result = deleteFile(folderPath);
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-	}
 
-	/**
-	 * 删除所有文件
-	 *
-	 * @param path
-	 *            路径
-	 * @return
-	 */
-	public static boolean delAllFile(String path)
-	{
-		boolean bea = false;
-
-		File file = new File(path);
-
-		if (!file.exists())
-		{
-			return bea;
-		}
-		if (!file.isDirectory())
-		{
-			return bea;
-		}
-
-		String[] tempList = file.list();
-
-		File temp;
-
-		for (String tempString : tempList)
-		{
-			if (path.endsWith(File.separator))
-			{
-				temp = new File(path + tempString);
-			}
-			else
-			{
-				temp = new File(path + File.separator + tempString);
-			}
-			if (temp.isFile())
-			{
-				temp.delete();
-			}
-			if (temp.isDirectory())
-			{
-				delAllFile(path + "/" + tempString);
-				delFolder(path + "/" + tempString);
-				bea = true;
-			}
-		}
-		return bea;
+		return result;
 	}
 
 	/**
 	 * 文件复制
 	 *
-	 * @param oldPathFile
-	 * @param newPathFile
-	 * @throws IOException
+	 * @param oldPathFile 旧的文件路径
+	 * @param newPathFile 新的文件路径
 	 */
-	public static void copyFile(String oldPathFile, String newPathFile) throws IOException
+	public static void copyFile(String oldPathFile, String newPathFile)
 	{
-		FileOutputStream fs = null;
-		InputStream inStream = null;
+		FileOutputStream out = null;
+
+		FileInputStream in = null;
+
 		try
 		{
-			int byteread;
-			File oldfile = new File(oldPathFile);
-			if (oldfile.exists())
+			File old_file = new File(oldPathFile);
+
+			if (old_file.exists())
 			{
-				inStream = new FileInputStream(oldPathFile);
-				fs = new FileOutputStream(newPathFile);
-				byte[] buffer = new byte[1024];
-				while ((byteread = inStream.read(buffer)) != -1)
-				{
-					fs.write(buffer, 0, byteread);
-				}
+				in = new FileInputStream(oldPathFile);
+
+				out = new FileOutputStream(newPathFile);
+
+				IOUtils.copy(in,out);
 			}
 		}
 		catch (Exception e)
@@ -312,13 +410,21 @@ public class FileUtils
 		}
 		finally
 		{
-			if (inStream != null)
+			try
 			{
-				inStream.close();
+				if (in != null)
+				{
+					in.close();
+				}
+
+				if (out != null)
+				{
+					out.close();
+				}
 			}
-			if (fs != null)
+			catch (Exception e)
 			{
-				fs.close();
+				e.printStackTrace();
 			}
 		}
 	}
@@ -326,44 +432,30 @@ public class FileUtils
 	/**
 	 * 文件夹复制
 	 *
-	 * @param oldPath
-	 * @param newPath
+	 * @param oldPath 旧文件路径
+	 * @param newPath 新的文件路径
 	 */
 	public static void copyFolder(String oldPath, String newPath)
 	{
 		try
 		{
-			new File(newPath).mkdirs();
-			File a = new File(oldPath);
-			String[] file = a.list();
-			File temp;
-			for (String file_name : file)
+			if(createFolder(newPath))
 			{
-				if (oldPath.endsWith(File.separator))
+				List<File> file_list = getFileList(oldPath);
+
+				for(File file : file_list)
 				{
-					temp = new File(oldPath + file_name);
-				}
-				else
-				{
-					temp = new File(oldPath + File.separator + file_name);
-				}
-				if (temp.isFile())
-				{
-					FileInputStream input = new FileInputStream(temp);
-					FileOutputStream output = new FileOutputStream(newPath + "/" + (temp.getName()));
-					byte[] b = new byte[1024 * 5];
-					int len;
-					while ((len = input.read(b)) != -1)
+					if(file.exists())
 					{
-						output.write(b, 0, len);
+						if(file.isDirectory())
+						{
+							copyFolder(file.getPath(),SystemUtils.joinFileSeparator(newPath,file.getName()));
+						}
+						else
+						{
+							copyFile(file.getPath(),SystemUtils.joinFileSeparator(newPath,file.getName()));
+						}
 					}
-					output.flush();
-					output.close();
-					input.close();
-				}
-				if (temp.isDirectory())
-				{
-					copyFolder(oldPath + "/" + file_name, newPath + "/" + file_name);
 				}
 			}
 		}
@@ -376,26 +468,25 @@ public class FileUtils
 	/**
 	 * 文件移动
 	 *
-	 * @param oldPath
-	 * @param newPath
-	 * @throws IOException
+	 * @param oldPath 旧文件路径
+	 * @param newPath 新的文件路径
 	 */
-	public static void moveFile(String oldPath, String newPath) throws IOException
+	public static void moveFile(String oldPath, String newPath)
 	{
 		copyFile(oldPath, newPath);
-		delFile(oldPath);
+		deleteFile(oldPath);
 	}
 
 	/**
 	 * 文件夹移动
 	 *
-	 * @param oldPath
-	 * @param newPath
+	 * @param oldPath 旧文件路径
+	 * @param newPath 新的文件路径
 	 */
 	public static void moveFolder(String oldPath, String newPath)
 	{
 		copyFolder(oldPath, newPath);
-		delFolder(oldPath);
+		deleteFolder(oldPath);
 	}
 
 	/**
@@ -409,158 +500,13 @@ public class FileUtils
 	 */
 	public static boolean renameFile(String resFilePath, String newFileName)
 	{
-		String newFilePath = formatPath(getParentPath(resFilePath) + "/" + newFileName);
 		File resFile = new File(resFilePath);
+
+		String newFilePath = resFile.getParentFile().getPath() + SystemUtils.getFileSeparator() + newFileName;
+
 		File newFile = new File(newFilePath);
+
 		return resFile.renameTo(newFile);
-	}
-
-	/**
-	 * 文件路径添加，通过参数来构建文件路径
-	 *
-	 * @param pathElements
-	 * @return
-	 */
-	public static String pathJoin(final String... pathElements)
-	{
-		final String path;
-
-		if (pathElements == null || pathElements.length == 0)
-		{
-			path = File.separator;
-		}
-		else
-		{
-			final StringBuffer sb = new StringBuffer();
-
-			for (final String pathElement : pathElements)
-			{
-				if (pathElement.length() > 0)
-				{
-					sb.append(pathElement);
-					sb.append(File.separator);
-				}
-			}
-
-			if (sb.length() > 0)
-			{
-				sb.deleteCharAt(sb.length() - 1);
-			}
-			path = sb.toString();
-		}
-
-		return (path);
-	}
-
-	/**
-	 * 判断一个文件是否存在
-	 *
-	 * @param filePath
-	 *            文件路径
-	 * @return 存在返回true，否则返回false
-	 */
-	public static boolean isExist(String filePath)
-	{
-		return new File(filePath).exists();
-	}
-
-	/**
-	 * 为fileDir目录下fileName文件，返回写入管道对象（BufferedWriter）
-	 *
-	 * @param fileDir
-	 * @param fileName
-	 * @return BufferedWriter
-	 */
-	public static BufferedWriter getWriter(String fileDir, String fileName)
-	{
-		try
-		{
-			File f1 = new File(fileDir);
-			if (!f1.exists())
-			{
-				f1.mkdirs();
-			}
-			f1 = new File(fileDir, fileName);
-			if (!f1.exists())
-			{
-				f1.createNewFile();
-			}
-			BufferedWriter bw = new BufferedWriter(new FileWriter(f1.getPath(), true));
-			return bw;
-		}
-		catch (Exception e)
-		{
-			return null;
-		}
-	}
-
-	/**
-	 * 为fileDir目录下fileName文件，返回写入管道对象（BufferedWriter）
-	 *
-	 * @param fileDir
-	 * @param fileName
-	 * @return FileOutputStream
-	 */
-	public static FileOutputStream getOutputStream(String fileDir, String fileName)
-	{
-		try
-		{
-			File f1 = new File(fileDir);
-			if (!f1.exists())
-			{
-				f1.mkdirs();
-			}
-			f1 = new File(fileDir, fileName);
-			if (!f1.exists())
-			{
-				f1.createNewFile();
-			}
-			FileOutputStream fos = new FileOutputStream(f1.getPath());
-			return fos;
-		}
-		catch (Exception e)
-		{
-			return null;
-		}
-	}
-
-	/**
-	 * 用encoding字符格式读取fileDir目录下fileName文件，返回读取文件管道对象（BufferedReader）
-	 *
-	 * @param fileDir
-	 * @param fileName
-	 * @param encoding
-	 * @return
-	 */
-	public static BufferedReader getReader(String fileDir, String fileName, String encoding)
-	{
-		try
-		{
-			File file = new File(fileDir, fileName);
-			InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);
-			BufferedReader br = new BufferedReader(read);
-			return br;
-		}
-		catch (FileNotFoundException ex)
-		{
-			return null;
-		}
-		catch (IOException e)
-		{
-			return null;
-		}
-	}
-
-	/**
-	 * 获取文件父路径
-	 *
-	 * @param path
-	 *            文件路径
-	 * @return 文件父路径
-	 */
-	public static String getParentPath(String path)
-	{
-		return new File(path).getParent();
 	}
 
 	/**
@@ -574,108 +520,53 @@ public class FileUtils
 	 */
 	public static String getRelativeRootPath(String fullPath, String rootPath)
 	{
-		String relativeRootPath = null;
-		String _fullPath = formatPath(fullPath);
-		String _rootPath = formatPath(rootPath);
+		String relativeRootPath = "";
 
-		if (_fullPath.startsWith(_rootPath))
+		File full_path = new File(fullPath);
+
+		File root_path = new File(rootPath);
+
+		if (full_path.getPath().startsWith(root_path.getPath()))
 		{
-			relativeRootPath = fullPath.substring(_rootPath.length());
+			relativeRootPath = full_path.getPath().substring(root_path.getPath().length());
 		}
-		else
-		{
-			throw new RuntimeException("要处理的两个字符串没有包含关系，处理失败！");
-		}
-		if (relativeRootPath == null)
-		{
-			return null;
-		}
-		else
-		{
-			return formatPath(relativeRootPath);
-		}
+
+		return relativeRootPath;
 	}
 
 	/**
-	 * 格式化文件路径，将其中不规范的分隔转换为标准的分隔符,并且去掉末尾的"/"符号。
-	 *
-	 * @param path
-	 * @return 格式化后的文件路径
-	 */
-	public static String formatPath(String path)
-	{
-		String reg0 = "////＋";
-		String reg = "////＋|/＋";
-		String temp = path.trim().replaceAll(reg0, "/");
-		temp = temp.replaceAll(reg, "/");
-		if (temp.endsWith("/"))
-		{
-			temp = temp.substring(0, temp.length() - 1);
-		}
-		if (System.getProperty("file.separator").equals("//"))
-		{
-			temp = temp.replace("/", "//");
-		}
-		return temp;
-	}
-
-	/**
-	 * 输入流转换成字节数组
-	 *
-	 * @param in
-	 *            ：输入流
-	 * @return byte[] 字节
-	 * @throws IOException
-	 */
-	public static byte[] readBytes(InputStream in) throws IOException
-	{
-		BufferedInputStream bufin = new BufferedInputStream(in);
-		int buffSize = 1024;
-		ByteArrayOutputStream out = new ByteArrayOutputStream(buffSize);
-		System.out.println("按照文件大小为bytes:" + in.available());
-		byte[] temp = new byte[buffSize];
-		int size;
-		while ((size = bufin.read(temp)) != -1)
-		{
-			out.write(temp, 0, size);
-		}
-		bufin.close();
-		byte[] content = out.toByteArray();
-		return content;
-	}
-
-	/**
-	 * 获取当前工作目录的路径
+	 * 获取当前的文件前缀
 	 * 
-	 * @return
-	 */
-	public static String getCurrentPath()
-	{
-		return System.getProperty("user.dir");
-	}
-	
-	
-	/**
-	 * 获取当前的文件的后缀
-	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName 文件名称
+	 * @return 文件前缀
 	 */
 	public static String getFilePrefix(String fileName)
 	{
-		String fileType = fileName.substring(0, fileName.lastIndexOf("."));
+		String fileType = null;
+
+		if(fileName.contains("."))
+		{
+			fileType = fileName.substring(0, fileName.lastIndexOf("."));
+		}
+
 		return fileType;
 	}
 
 	/**
 	 * 获取当前的文件的后缀
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName 文件名称
+	 * @return 文件后缀
 	 */
 	public static String getFilePostfix(String fileName)
 	{
-		String fileType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+		String fileType = null;
+
+		if(fileName.contains("."))
+		{
+			fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+		}
+
 		return fileType;
 	}
 
