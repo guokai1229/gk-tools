@@ -2,7 +2,6 @@ package top.guokaicn.tools.utils;
 
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -11,7 +10,6 @@ import java.lang.reflect.Method;
  * @author gk
  *
  */
-@SuppressWarnings("unchecked")
 public class ClassUtils
 {
 	/**
@@ -58,15 +56,7 @@ public class ClassUtils
 		{
 			t = (T) Class.forName(clazz).newInstance();
 		}
-		catch (InstantiationException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IllegalAccessException e)
-		{
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -89,14 +79,11 @@ public class ClassUtils
 		{
 			t = (T) clazz.newInstance();
 		}
-		catch (InstantiationException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		catch (IllegalAccessException e)
-		{
-			e.printStackTrace();
-		}
+
 		return t;
 	}
 
@@ -111,7 +98,7 @@ public class ClassUtils
 	{
 		T t = null;
 
-		if (params != null && params.length!=0)
+		if (params == null || params.length ==0)
 		{
 			return newInstance(clazz);
 		}
@@ -120,25 +107,15 @@ public class ClassUtils
 		{
 			t = clazz.getDeclaredConstructor(getClasses(params)).newInstance(params);
 		}
-		catch (InstantiationException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IllegalAccessException e)
-		{
-			e.printStackTrace();
-		}
-		catch (InvocationTargetException e)
-		{
-			e.printStackTrace();
-		}
-		catch (NoSuchMethodException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 
 		return t;
 	}
+
+
 
 	/**
 	 * 查找方法
@@ -260,7 +237,7 @@ public class ClassUtils
 	/**
 	 * @param file
 	 *            文件
-	 * @return是否为Jar文件
+	 * @return 是否为Jar文件
 	 */
 	public static boolean isJarFile(File file)
 	{
