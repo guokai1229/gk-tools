@@ -21,6 +21,7 @@
     - JSONUtils 对于json的通用方法操作
     - SystemUtils 获取系统信息的一般操作
     - UUIDUtils 关于uuid的方法
+    - ZipUtils 关于zip操作的方法
     
 #### 使用说明
 
