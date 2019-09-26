@@ -27,7 +27,9 @@ public class ClassUtilsTest
 	@Test
 	public void testNewInstance1()
 	{
-		ConfigHandler config = ClassUtils.newInstance(ConfigHandler.class,"D:\\test\\测试\\11\\xcf1.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		ConfigHandler config = ClassUtils.newInstance(ConfigHandler.class,path+"\\config.properties");
 
 		System.out.println(config);
 	}

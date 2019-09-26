@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.io.*;
 import java.util.List;
 
-import static org.junit.Assert.*;
 
 public class FileUtilsTest
 {
@@ -13,7 +12,9 @@ public class FileUtilsTest
 	@Test
 	public void createFolder()
 	{
-		boolean folderPath = FileUtils.createFolder("d:\\test\\测试\\11\\xcf");
+		String path = this.getClass().getResource("/").getFile();
+
+		boolean folderPath = FileUtils.createFolder(path+"\\test\\测试\\11\\xcf");
 
 		System.out.println(folderPath);
 	}
@@ -21,7 +22,9 @@ public class FileUtilsTest
 	@Test
 	public void createFile()
 	{
-		File file = FileUtils.createFile("d:\\test\\测试\\11\\xcf.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		File file = FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt");
 
 		System.out.println(file.getName());
 	}
@@ -29,7 +32,9 @@ public class FileUtilsTest
 	@Test
 	public void testCreateFile()
 	{
-		File file = FileUtils.createFile("d:\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
+		String path = this.getClass().getResource("/").getFile();
+
+		File file = FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
 
 		System.out.println(file.getName());
 	}
@@ -37,7 +42,9 @@ public class FileUtilsTest
 	@Test
 	public void testCreateFile1()
 	{
-		File file = FileUtils.createFile("d:\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文","GBK");
+		String path = this.getClass().getResource("/").getFile();
+
+		File file = FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文","GBK");
 
 		System.out.println(file.getName());
 	}
@@ -45,7 +52,9 @@ public class FileUtilsTest
 	@Test
 	public void getFileWriter()
 	{
-		Writer writer = FileUtils.getFileWriter("d:\\test\\测试\\11\\xcf.txt",true);
+		String path = this.getClass().getResource("/").getFile();
+
+		Writer writer = FileUtils.getFileWriter(path+"\\testwriter.txt",true);
 
 		try
 		{
@@ -63,7 +72,9 @@ public class FileUtilsTest
 	@Test
 	public void getReader()
 	{
-		BufferedReader reader = FileUtils.getFileReader("d:\\test\\测试\\11\\xcf.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		BufferedReader reader = FileUtils.getFileReader(path+"\\test.txt");
 
 		while(true)
 		{
@@ -87,7 +98,9 @@ public class FileUtilsTest
 	@Test
 	public void getTestReader()
 	{
-		BufferedReader reader = FileUtils.getFileReader("d:\\test\\测试\\11\\xcf.txt","gbk");
+		String path = this.getClass().getResource("/").getFile();
+
+		BufferedReader reader = FileUtils.getFileReader(path+"\\test.txt","gbk");
 
 		while(true)
 		{
@@ -110,7 +123,9 @@ public class FileUtilsTest
 	@Test
 	public void getTestReader1()
 	{
-		File file = new File("d:\\test\\测试\\11\\xcf.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		File file = new File(path+"\\test.txt");
 
 		BufferedReader reader = FileUtils.getFileReader(file,"gbk");
 
@@ -135,7 +150,9 @@ public class FileUtilsTest
 	@Test
 	public void getFileList()
 	{
-		List<File> file_list = FileUtils.getFileList("d:\\test\\测试\\11");
+		String path = this.getClass().getResource("/").getFile();
+
+		List<File> file_list = FileUtils.getFileList(path);
 
 		System.out.println(file_list);
 	}
@@ -143,7 +160,9 @@ public class FileUtilsTest
 	@Test
 	public void delFile()
 	{
-		boolean folderPath = FileUtils.deleteFile("d:\\test\\测试\\11\\xcf");
+		String path = this.getClass().getResource("/").getFile();
+
+		boolean folderPath = FileUtils.deleteFile(path+"\\test\\测试\\11\\xcf.txt");
 
 		System.out.println(folderPath);
 	}
@@ -151,7 +170,9 @@ public class FileUtilsTest
 	@Test
 	public void delFolder()
 	{
-		boolean folderPath = FileUtils.deleteFolder("d:\\test\\测试\\11");
+		String path = this.getClass().getResource("/").getFile();
+
+		boolean folderPath = FileUtils.deleteFolder(path+"\\test\\测试\\11");
 
 		System.out.println(folderPath);
 	}
@@ -159,7 +180,9 @@ public class FileUtilsTest
 	@Test
 	public void delAllFile()
 	{
-		boolean folderPath = FileUtils.deleteAllFile("d:\\test\\测试");
+		String path = this.getClass().getResource("/").getFile();
+
+		boolean folderPath = FileUtils.deleteAllFile(path+ "\\test");
 
 		System.out.println(folderPath);
 	}
@@ -167,40 +190,62 @@ public class FileUtilsTest
 	@Test
 	public void copyFile()
 	{
-		FileUtils.copyFile("d:\\test\\测试\\11\\xcf.txt","d:\\test\\测试\\11\\xcf1.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		FileUtils.copyFile(path+"\\copy.txt",path+"\\copy1.txt");
+
+		FileUtils.deleteFile(path+"\\copy1.txt");
 	}
 
 	@Test
 	public void copyFolder()
 	{
-		FileUtils.copyFolder("d:\\test\\测试\\11","d:\\test\\测试\\22");
+		String path = this.getClass().getResource("/").getFile();
+
+		FileUtils.copyFolder(path+"\\copy",path+"\\copy1");
+
+		FileUtils.deleteFolder(path+"\\copy1");
 	}
 
 	@Test
 	public void moveFile()
 	{
-		FileUtils.moveFile("d:\\test\\测试\\11\\xcf1.txt","d:\\test\\测试\\11\\xcf2.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		FileUtils.moveFile(path+"\\move.txt",path+"\\move1.txt");
+
+		FileUtils.moveFile(path+"\\move1.txt",path+"\\move.txt");
 	}
 
 	@Test
 	public void moveFolder()
 	{
-		FileUtils.moveFolder("d:\\test\\测试\\11","d:\\test\\测试\\33");
+		String path = this.getClass().getResource("/").getFile();
+
+		FileUtils.moveFolder(path+"\\move",path+"\\move1");
+
+		FileUtils.moveFolder(path+"\\move1",path+"\\move");
 	}
 
 	@Test
 	public void renameFile()
 	{
-		boolean result = FileUtils.renameFile("d:\\test\\测试\\11\\xcf1.txt","xcf4.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		boolean result = FileUtils.renameFile(path+"\\rename.txt","rename1.txt");
 
 		System.out.println(result);
+
+		FileUtils.renameFile(path+"\\rename1.txt","rename.txt");
 	}
 
 
 	@Test
 	public void getRelativeRootPath()
 	{
-		String result = FileUtils.getRelativeRootPath("d:\\test\\测试\\11\\xcf1.txt","d:\\test");
+		String path = this.getClass().getResource("/").getFile();
+
+		String result = FileUtils.getRelativeRootPath(path+"\\test\\测试\\11\\xcf1.txt",path);
 
 		System.out.println(result);
 	}
@@ -208,7 +253,9 @@ public class FileUtilsTest
 	@Test
 	public void readBytes()
 	{
-		byte[] data = FileUtils.getFileBytes("d:\\test\\测试\\11\\xcf1.txt");
+		String path = this.getClass().getResource("/").getFile();
+
+		byte[] data = FileUtils.getFileBytes(path+"\\test.txt");
 
 		System.out.println(new String(data));
 	}

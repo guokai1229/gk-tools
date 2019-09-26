@@ -12,7 +12,9 @@ public class IOUtilsTest
 	@Test
 	public void toByteArray() throws Exception
 	{
-		InputStream in = new FileInputStream("E:\\work\\filterID.properties");
+		String path = this.getClass().getResource("/config.properties").getFile();
+
+		InputStream in = new FileInputStream(path);
 
 		byte[] data = IOUtils.toByteArray(in);
 
@@ -23,10 +25,29 @@ public class IOUtilsTest
 	@Test
 	public void copy() throws Exception
 	{
-		InputStream in = new FileInputStream("E:\\work\\filterID.properties");
+		String path = this.getClass().getResource("/config.properties").getFile();
 
-		OutputStream out = new FileOutputStream("E:\\work\\filterID2.properties");
+		String copy_path = this.getClass().getResource("/").getFile()+"/"+"configcopy.properties";
+
+		InputStream in = new FileInputStream(path);
+
+		OutputStream out = new FileOutputStream(copy_path);
 
 		IOUtils.copy(in,out);
+
+		in.close();
+
+		out.close();
+
+		File copy_file = new File(copy_path);
+
+		if(copy_file.exists())
+		{
+			copy_file.delete();
+		}
+		else
+		{
+			fail("copy失败");
+		}
 	}
 }
