@@ -24,7 +24,12 @@ public class DESUtils
 	{
 		byte[] result = DESUtils.encrypt(datasource.getBytes(), password);
 
-		return Hex.encodeHexString(result);
+		if (result != null)
+		{
+			return Hex.encodeHexString(result);
+		}
+
+		return null;
 	}
 
 	/**
@@ -43,7 +48,10 @@ public class DESUtils
 
 			byte[] decryResult = DESUtils.decrypt(hex_result, password);
 
-			result = new String(decryResult);
+			if (decryResult != null)
+			{
+				result = new String(decryResult);
+			}
 		}
 		catch (Exception e1)
 		{
@@ -63,9 +71,7 @@ public class DESUtils
 	{
 		byte[] result = DESUtils.encrypt(datasource.getBytes(), password);
 
-		byte[] base64_result = Base64.encodeBase64(result);
-
-		return new String(base64_result);
+		return Base64.encodeBase64String(result);
 	}
 
 	/**
@@ -84,8 +90,10 @@ public class DESUtils
 		{
 			byte[] decryResult = DESUtils.decrypt(base64_result, password);
 
-			result = new String(decryResult);
-
+			if (decryResult != null)
+			{
+				result = new String(decryResult);
+			}
 		}
 		catch (Exception e1)
 		{
