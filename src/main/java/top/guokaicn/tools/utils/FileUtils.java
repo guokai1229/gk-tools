@@ -283,15 +283,26 @@ public class FileUtils
 	 */
 	public static List<File> getFileList(String filePath)
 	{
-		List<File> result = new ArrayList<>();
-
 		File d = new File(filePath);
 
-		if (d.exists())
+		return getFileList(d);
+	}
+
+	/**
+	 * 返回路径下的所有文件列表
+	 *
+	 * @param file 文件对象
+	 * @return List<File>
+	 */
+	public static List<File> getFileList(File file)
+	{
+		List<File> result = new ArrayList<>();
+
+		if (file!= null &&file.exists())
 		{
-			if(d.listFiles() != null)
+			if(file.listFiles() != null)
 			{
-				result = Arrays.asList(d.listFiles());
+				result = Arrays.asList(file.listFiles());
 			}
 		}
 

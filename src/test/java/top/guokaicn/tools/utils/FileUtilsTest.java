@@ -158,6 +158,18 @@ public class FileUtilsTest
 	}
 
 	@Test
+	public void testGetFileList()
+	{
+		String path = this.getClass().getResource("/").getFile();
+
+		File file = new File(path);
+
+		List<File> file_list = FileUtils.getFileList(file);
+
+		System.out.println(file_list);
+	}
+
+	@Test
 	public void delFile()
 	{
 		String path = this.getClass().getResource("/").getFile();
