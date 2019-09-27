@@ -106,6 +106,17 @@ public class JSONUtils
 	}
 
 	/**
+	 * object创建json对象
+	 * @param data 数据
+	 * @return 对象
+	 */
+	public static JsonNode objectToJsonObject(Object data)
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.valueToTree(data);
+	}
+
+	/**
 	 * 创建一个对象节点
 	 *
 	 * @return 节点
