@@ -1,5 +1,7 @@
 package top.guokaicn.tools.utils;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;

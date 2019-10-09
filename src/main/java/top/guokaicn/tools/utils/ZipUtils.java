@@ -1,5 +1,6 @@
 package top.guokaicn.tools.utils;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.*;

@@ -4,7 +4,7 @@
 
 	<groupId>top.guokaicn</groupId>
 	<artifactId>gk-tools</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<packaging>jar</packaging>
 
 
@@ -23,7 +23,12 @@
 			<version>2.6</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+			<scope>provided</scope>
+		</dependency>
         <!-- security所使用-开始 -->
         <dependency>
             <groupId>commons-codec</groupId>
