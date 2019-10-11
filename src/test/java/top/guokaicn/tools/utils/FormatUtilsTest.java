@@ -3,7 +3,9 @@ package top.guokaicn.tools.utils;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -294,5 +296,27 @@ public class FormatUtilsTest
 		List<String> result = FormatUtils.stringToList("3123;4124;5123",';');
 
 		System.out.println(result);
+	}
+
+	@Test
+	public void formatString()
+	{
+		Map valuesMap = new HashMap();
+		valuesMap.put("animal", "quick brown fox");
+		valuesMap.put("target", "lazy dog");
+		String templateString = "The ${animal} jumped over the ${target}.";
+
+		System.out.println(FormatUtils.formatString(templateString,valuesMap));
+	}
+
+	@Test
+	public void testFormatString()
+	{
+		Map valuesMap = new HashMap();
+		valuesMap.put("animal", "quick brown fox");
+		valuesMap.put("target", "lazy dog");
+		String templateString = "The #{animal} jumped over the #{target}.";
+
+		System.out.println(FormatUtils.formatString(templateString,valuesMap,"#{","}",'#'));
 	}
 }

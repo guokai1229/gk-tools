@@ -1,12 +1,15 @@
 package top.guokaicn.tools.utils;
 
 import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang.text.StrSubstitutor;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class FormatUtils
 {
@@ -348,5 +351,42 @@ public class FormatUtils
 		String[] data = str.split(separator.toString());
 
 		return Arrays.asList(data);
+	}
+
+	/**
+	 * 通过键值对来格式化字符串，会替换原字符串中的${key}的值为value
+	 * @param str 字符串
+	 * @param valuesMap 键值对
+	 * @return 替换后的字符串
+	 */
+	public static String formatString(String str, Map valuesMap)
+	{
+		return formatString(str, valuesMap,"${","}",StrSubstitutor.DEFAULT_ESCAPE);
+	}
+
+	/**
+	 * 通过键值对来格式化字符串，会替换原字符串中的${key}的值为value
+	 * @param str 字符串
+	 * @param valuesMap 键值对
+	 * @param prefix 自定义的前缀
+	 * @param suffix 自定义的后缀
+	 * @param escape 标识符
+	 * @return 替换后的字符串
+	 */
+	public static String formatString(String str, Map valuesMap,String prefix, String suffix, char escape)
+	{
+		String result = str;
+
+		if(valuesMap != null && !valuesMap.isEmpty())
+		{
+			if(StringUtils.isNotBlank(str))
+			{
+				StrSubstitutor sub = new StrSubstitutor(valuesMap,prefix,suffix,escape);
+
+				result = sub.replace(str);
+			}
+		}
+
+		return result;
 	}
 }
