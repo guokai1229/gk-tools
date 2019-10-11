@@ -32,7 +32,7 @@ public class XMLUtils
 			{
 				String value = ele.getText();
 
-				if(StringUtils.isBlank(value))
+				if(StringUtils.isBlank(value) && !ele.elements().isEmpty())
 				{
 					value = ele.asXML();
 				}
