@@ -18,6 +18,7 @@
     - FileUtils 对于文件的一般操作
     - FormatUtils 格式化的一般操作包括类型转换
     - JSONUtils 对于json的通用方法操作
+    - XMLUtils 对于xml的通用方法操作
     - SystemUtils 获取系统信息的一般操作
     - UUIDUtils 关于uuid的方法
     - ZipUtils 关于zip操作的方法
