@@ -177,6 +177,66 @@ public class FormatUtilsTest
 	}
 
 	@Test
+	public void toFloat()
+	{
+		float result = FormatUtils.toFloat(null);
+
+		System.out.println(result);
+
+		result = FormatUtils.toFloat("33");
+
+		System.out.println(result);
+
+		result = FormatUtils.toFloat("3asdf");
+
+		System.out.println(result);
+
+		result = FormatUtils.toFloat("33.44");
+
+		System.out.println(result);
+	}
+
+	@Test
+	public void testToFloat()
+	{
+		float result = FormatUtils.toFloat(null,0.5f);
+
+		System.out.println(result);
+
+		result = FormatUtils.toFloat("33",0.5f);
+
+		System.out.println(result);
+
+		result = FormatUtils.toFloat("3asdf",0.5f);
+
+		System.out.println(result);
+
+		result = FormatUtils.toFloat("33.44",0.5f);
+
+		System.out.println(result);
+	}
+
+	@Test
+	public void isFloat()
+	{
+		boolean result = FormatUtils.isFloat(null);
+
+		System.out.println(result);
+
+		result = FormatUtils.isFloat("33");
+
+		System.out.println(result);
+
+		result = FormatUtils.isFloat("3asdf");
+
+		System.out.println(result);
+
+		result = FormatUtils.isFloat("33.232");
+
+		System.out.println(result);
+	}
+
+	@Test
 	public void getFormatNumber()
 	{
 		String result = FormatUtils.getFormatNumber(44,"0.0000");

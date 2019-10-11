@@ -1,5 +1,8 @@
 package top.guokaicn.tools.utils;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.math.NumberUtils;
+
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,12 +17,7 @@ public class FormatUtils
 	 */
 	public static boolean toBoolean(String str)
 	{
-		if(str == null || str.trim().equals(""))
-		{
-			return false;
-		}
-
-		return str.equals("true");
+		return BooleanUtils.toBoolean(str);
 	}
 
 	/**
@@ -30,24 +28,26 @@ public class FormatUtils
 	 */
 	public static int toInt(String str)
 	{
-		return  toInt(str,-1);
+		return toInt(str,-1);
 	}
 
 	/**
 	 * 把字符串转换为int，如果为空，则使用默认值
 	 * @param str 字符串
-	 * @param defaultvalue 默认值
+	 * @param defaultValue 默认值
 	 * @return 值
 	 */
-	public static int toInt(String str,int defaultvalue)
+	public static int toInt(String str,int defaultValue)
 	{
-		if (!isInt(str))
+		if(NumberUtils.isNumber(str))
 		{
-			return defaultvalue;
+			Number num =  NumberUtils.createNumber(str);
+
+			return num.intValue();
 		}
 		else
 		{
-			return Integer.parseInt(str);
+			return NumberUtils.toInt(str,defaultValue);
 		}
 	}
 
@@ -102,18 +102,20 @@ public class FormatUtils
 	/**
 	 * 把字符串转换为long，如果为空，则使用默认值
 	 * @param str 字符串
-	 * @param defaultvalue 默认值
+	 * @param defaultValue 默认值
 	 * @return 值
 	 */
-	public static long toLong(String str,long defaultvalue)
+	public static long toLong(String str,long defaultValue)
 	{
-		if (!isLong(str))
+		if(NumberUtils.isNumber(str))
 		{
-			return defaultvalue;
+			Number num =  NumberUtils.createNumber(str);
+
+			return num.longValue();
 		}
 		else
 		{
-			return Long.parseLong(str);
+			return NumberUtils.toLong(str,defaultValue);
 		}
 	}
 
@@ -168,19 +170,12 @@ public class FormatUtils
 	/**
 	 * 把字符串转换为double，如果为空，则使用默认值
 	 * @param str 字符串
-	 * @param defaultvalue 默认值
+	 * @param defaultValue 默认值
 	 * @return 值
 	 */
-	public static double toDouble(String str,double defaultvalue)
+	public static double toDouble(String str,double defaultValue)
 	{
-		if (!isDouble(str))
-		{
-			return defaultvalue;
-		}
-		else
-		{
-			return Double.parseDouble(str);
-		}
+		return NumberUtils.toDouble(str, defaultValue);
 	}
 
 	/**
@@ -221,6 +216,65 @@ public class FormatUtils
 	}
 
 	/**
+	 * 把字符串转换为float，如果为空，则默认为-1
+	 *
+	 * @param str 字符串
+	 * @return 值
+	 */
+	public static float toFloat(String str)
+	{
+		return toFloat(str,-1.0f);
+	}
+
+	/**
+	 * 把字符串转换为float，如果为空，则使用默认值
+	 * @param str 字符串
+	 * @param defaultValue 默认值
+	 * @return 值
+	 */
+	public static float toFloat(String str,float defaultValue)
+	{
+		return NumberUtils.toFloat(str, defaultValue);
+	}
+
+	/**
+	 * 多个字符串参数，是否为float型的字符
+	 *
+	 * @param strings 参数
+	 * @return 值
+	 */
+	public static boolean isFloat(String... strings)
+	{
+		if(strings != null && strings.length>0)
+		{
+			for(String str : strings)
+			{
+				if(str == null || str.trim().equals(""))
+				{
+					return false;
+				}
+			}
+			try
+			{
+				for (String str : strings)
+				{
+					Float.parseFloat(str);
+				}
+			}
+			catch (NumberFormatException e)
+			{
+				return false;
+			}
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * 获取格式化数字，格式：#0.00
 	 *
 	 * @param value 需要格式化的数字
@@ -230,11 +284,7 @@ public class FormatUtils
 	{
 		DecimalFormat df = new DecimalFormat("#"+format);
 
-		String result = format;
-
-		result = df.format(value);
-
-		return result;
+		return df.format(value);
 	}
 
 	/**
@@ -247,11 +297,7 @@ public class FormatUtils
 	{
 		DecimalFormat df = new DecimalFormat("#"+format);
 
-		String result = format;
-
-		result = df.format(value);
-
-		return result;
+		return df.format(value);
 	}
 
 	/**
