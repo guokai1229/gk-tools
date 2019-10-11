@@ -1,8 +1,10 @@
 package top.guokaicn.tools.utils;
 
-
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * class工具类 ,用来处理java的反射的一般方法
@@ -12,6 +14,51 @@ import java.lang.reflect.Method;
  */
 public class ClassUtils
 {
+
+	/**
+	 * map转换为bean对象
+	 * @param map 数据
+	 * @param clazz class名称
+	 * @param <T> 对象
+	 * @return 数据
+	 */
+	public static <T> T mapToBean(Map<String,Object> map,Class clazz)
+	{
+		T bean = null;
+
+		try
+		{
+			bean = (T) clazz.newInstance();
+
+			PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
+
+			for (PropertyDescriptor property : propertyDescriptors)
+			{
+				String propertyName = property.getName();
+
+				Object value = map.get(propertyName);
+
+				if(value != null)
+				{
+					Method setter = property.getWriteMethod();
+
+					Class paramtypes = setter.getParameterTypes()[0];
+
+					if(value.getClass().equals(paramtypes))
+					{
+						setter.invoke(bean, value);
+					}
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return bean;
+	}
+
 	/**
 	 * 获得class loader<br>
 	 * 若当前线程class loader不存在，取当前类的class loader
@@ -223,6 +270,7 @@ public class ClassUtils
 		}
 		return classes;
 	}
+
 
 	/**
 	 * @param file
