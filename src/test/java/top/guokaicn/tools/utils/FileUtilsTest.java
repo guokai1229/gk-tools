@@ -17,6 +17,8 @@ public class FileUtilsTest
 		boolean folderPath = FileUtils.createFolder(path+"\\test\\测试\\11\\xcf");
 
 		System.out.println(folderPath);
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -27,6 +29,8 @@ public class FileUtilsTest
 		File file = FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt");
 
 		System.out.println(file.getName());
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -174,9 +178,13 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		boolean folderPath = FileUtils.deleteFile(path+"\\test\\测试\\11\\xcf.txt");
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf1.txt","tsetsetsetstsaetasetaset中文中文");
+
+		boolean folderPath = FileUtils.deleteFile(path+"\\test\\测试\\11\\xcf1.txt");
 
 		System.out.println(folderPath);
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -184,9 +192,13 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
+		FileUtils.createFolder(path+"\\test\\测试\\11\\xcf");
+
 		boolean folderPath = FileUtils.deleteFolder(path+"\\test\\测试\\11");
 
 		System.out.println(folderPath);
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -194,9 +206,15 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf1.txt","tsetsetsetstsaetasetaset中文中文");
+
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf2.txt","tsetsetsetstsaetasetaset中文中文");
+
 		boolean folderPath = FileUtils.deleteAllFile(path+ "\\test");
 
 		System.out.println(folderPath);
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -214,9 +232,13 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		FileUtils.copyFolder(path+"\\copy",path+"\\copy1");
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf1.txt","tsetsetsetstsaetasetaset中文中文");
 
-		FileUtils.deleteFolder(path+"\\copy1");
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf2.txt","tsetsetsetstsaetasetaset中文中文");
+
+		FileUtils.copyFolder(path+"\\test\\测试\\11",path+"\\test\\测试\\22");
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -224,9 +246,11 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		FileUtils.moveFile(path+"\\move.txt",path+"\\move1.txt");
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf1.txt","tsetsetsetstsaetasetaset中文中文");
 
-		FileUtils.moveFile(path+"\\move1.txt",path+"\\move.txt");
+		FileUtils.moveFile(path+"\\test\\测试\\11\\xcf1.txt",path+"\\test\\测试\\22\\xcf1.txt");
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -234,9 +258,11 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		FileUtils.moveFolder(path+"\\move",path+"\\move1");
+		FileUtils.createFile(path+"\\test\\测试\\11\\xcf1.txt","tsetsetsetstsaetasetaset中文中文");
 
-		FileUtils.moveFolder(path+"\\move1",path+"\\move");
+		FileUtils.moveFolder(path+"\\test\\测试\\11",path+"\\test\\测试\\22");
+
+		FileUtils.deleteFolder(path+"\\test");
 	}
 
 	@Test
@@ -270,6 +296,26 @@ public class FileUtilsTest
 		byte[] data = FileUtils.getFileBytes(path+"\\test.txt");
 
 		System.out.println(new String(data));
+	}
+
+	@Test
+	public void getFileString()
+	{
+		String path = this.getClass().getResource("/").getFile();
+
+		String data = FileUtils.getFileString(path+"\\test.txt");
+
+		System.out.println(data);
+	}
+
+	@Test
+	public void testGetFileString()
+	{
+		String path = this.getClass().getResource("/").getFile();
+
+		String data = FileUtils.getFileString(path+"\\test.txt","utf-8");
+
+		System.out.println(data);
 	}
 
 

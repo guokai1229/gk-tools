@@ -1,6 +1,6 @@
 package top.guokaicn.tools.utils;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -31,15 +31,7 @@ public class FileUtils
 
 			if (!myFilePath.exists())
 			{
-				if (!myFilePath.getParentFile().exists())
-				{
-					result = createFolder(myFilePath.getParentFile().getPath());
-				}
-
-				if(result)
-				{
-					result = myFilePath.mkdir();
-				}
+				org.apache.commons.io.FileUtils.forceMkdir(myFilePath);
 			}
 		}
 		catch (Exception e)
@@ -262,11 +254,7 @@ public class FileUtils
 		{
 			if(file.exists())
 			{
-				FileInputStream in = new FileInputStream(file);
-
-				result =  IOUtils.toByteArray(in);
-
-				in.close();
+				result = org.apache.commons.io.FileUtils.readFileToByteArray(file);
 			}
 		}
 		catch (Exception e)
@@ -277,6 +265,58 @@ public class FileUtils
 		return result;
 	}
 
+	/**
+	 * 读取文件作为字符串
+	 * @param filePathAndName 文件路径
+	 * @return 数据
+	 */
+	public static String getFileString(String filePathAndName)
+	{
+		String result = null;
+
+		File file = new File(filePathAndName);
+
+		try
+		{
+			if(file.exists())
+			{
+				result = org.apache.commons.io.FileUtils.readFileToString(file,SystemUtils.getSystemCharset());
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/**
+	 * 读取文件作为字符串
+	 * @param filePathAndName 文件路径
+	 * @param encoding 字符串编码
+	 * @return 数据
+	 */
+	public static String getFileString(String filePathAndName,String encoding)
+	{
+		String result = null;
+
+		File file = new File(filePathAndName);
+
+		try
+		{
+			if(file.exists())
+			{
+				result = org.apache.commons.io.FileUtils.readFileToString(file,encoding);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 	/**
 	 * 返回路径下的所有文件列表
 	 *
@@ -302,9 +342,11 @@ public class FileUtils
 
 		if (file!= null &&file.exists())
 		{
-			if(file.listFiles() != null)
+			File[] list = file.listFiles();
+
+			if(list != null)
 			{
-				result = Arrays.asList(file.listFiles());
+				result = Arrays.asList(list);
 			}
 		}
 
@@ -350,19 +392,20 @@ public class FileUtils
 	{
 		boolean result = false;
 
-		List<File> file_list = getFileList(folderPath);
+		File myDelFile = new File(folderPath);
 
-		for(File file:file_list)
+		try
 		{
-			if(file.exists())
+			if(myDelFile.exists())
 			{
-				if(file.isDirectory())
-				{
-					deleteAllFile(file.getPath());
-				}
+				org.apache.commons.io.FileUtils.cleanDirectory(myDelFile);
 
-				result = file.delete();
+				result = true;
 			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 
 		return result;
@@ -381,8 +424,16 @@ public class FileUtils
 
 		try
 		{
-			result = deleteAllFile(folderPath);
-			result = deleteFile(folderPath);
+			File myDelFile = new File(folderPath);
+
+			if(myDelFile.exists())
+			{
+				org.apache.commons.io.FileUtils.forceDelete(myDelFile);
+			}
+			else
+			{
+				result = true;
+			}
 		}
 		catch (Exception e)
 		{
@@ -400,45 +451,20 @@ public class FileUtils
 	 */
 	public static void copyFile(String oldPathFile, String newPathFile)
 	{
-		FileOutputStream out = null;
-
-		FileInputStream in = null;
-
 		try
 		{
 			File old_file = new File(oldPathFile);
 
+			File new_File = new File(newPathFile);
+
 			if (old_file.exists())
 			{
-				in = new FileInputStream(oldPathFile);
-
-				out = new FileOutputStream(newPathFile);
-
-				IOUtils.copy(in,out);
+				org.apache.commons.io.FileUtils.copyFile(old_file,new_File);
 			}
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				if (in != null)
-				{
-					in.close();
-				}
-
-				if (out != null)
-				{
-					out.close();
-				}
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -452,24 +478,13 @@ public class FileUtils
 	{
 		try
 		{
-			if(createFolder(newPath))
-			{
-				List<File> file_list = getFileList(oldPath);
+			File old_path = new File(oldPath);
 
-				for(File file : file_list)
-				{
-					if(file.exists())
-					{
-						if(file.isDirectory())
-						{
-							copyFolder(file.getPath(),SystemUtils.joinFileSeparator(newPath,file.getName()));
-						}
-						else
-						{
-							copyFile(file.getPath(),SystemUtils.joinFileSeparator(newPath,file.getName()));
-						}
-					}
-				}
+			File new_path = new File(newPath);
+
+			if(old_path.exists())
+			{
+				org.apache.commons.io.FileUtils.copyDirectory(old_path,new_path);
 			}
 		}
 		catch (Exception e)
@@ -486,8 +501,21 @@ public class FileUtils
 	 */
 	public static void moveFile(String oldPath, String newPath)
 	{
-		copyFile(oldPath, newPath);
-		deleteFile(oldPath);
+		try
+		{
+			File old_path = new File(oldPath);
+
+			File new_path = new File(newPath);
+
+			if(old_path.exists())
+			{
+				org.apache.commons.io.FileUtils.moveFile(old_path,new_path);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -498,8 +526,21 @@ public class FileUtils
 	 */
 	public static void moveFolder(String oldPath, String newPath)
 	{
-		copyFolder(oldPath, newPath);
-		deleteFolder(oldPath);
+		try
+		{
+			File old_path = new File(oldPath);
+
+			File new_path = new File(newPath);
+
+			if(old_path.exists())
+			{
+				org.apache.commons.io.FileUtils.moveDirectory(old_path,new_path);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -555,14 +596,7 @@ public class FileUtils
 	 */
 	public static String getFilePrefix(String fileName)
 	{
-		String fileType = null;
-
-		if(fileName.contains("."))
-		{
-			fileType = fileName.substring(0, fileName.lastIndexOf("."));
-		}
-
-		return fileType;
+		return  FilenameUtils.getBaseName(fileName);
 	}
 
 	/**
@@ -573,14 +607,7 @@ public class FileUtils
 	 */
 	public static String getFilePostfix(String fileName)
 	{
-		String fileType = null;
-
-		if(fileName.contains("."))
-		{
-			fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-		}
-
-		return fileType;
+		return FilenameUtils.getExtension(fileName);
 	}
 
 	/**
