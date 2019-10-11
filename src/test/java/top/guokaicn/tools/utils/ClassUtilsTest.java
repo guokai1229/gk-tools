@@ -272,6 +272,34 @@ public class ClassUtilsTest
 	}
 
 	@Test
+	public void beanToMap()
+	{
+		Map<String,Object> data = new HashMap<>();
+
+		data.put("fp0","123123123");
+
+		data.put("fp1","2222222222");
+
+		data.put("fp2","3333333333");
+
+		data.put("fp3","4444444444");
+
+		data.put("c_fp0","4444444444");
+
+		data.put("c_fp1","4444444444");
+
+		data.put("c_fp2","4444444444");
+
+		data.put("c_fp3","4444444444");
+
+		AlarmRecord alarmRecord= ClassUtils.mapToBean(data,AlarmRecord.class);
+
+		Map<String,Object> result = ClassUtils.beanToMap(alarmRecord);
+
+		System.out.println(result);
+	}
+
+	@Test
 	public void newInstance()
 	{
 		ClassUtils classa = ClassUtils.newInstance("top.guokaicn.tools.utils.ClassUtils");

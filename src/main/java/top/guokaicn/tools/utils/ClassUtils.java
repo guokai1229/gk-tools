@@ -1,9 +1,11 @@
 package top.guokaicn.tools.utils;
 
+import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,6 +59,47 @@ public class ClassUtils
 		}
 
 		return bean;
+	}
+
+	/**
+	 * bean转换为map对象
+	 * @param obj 对象
+	 * @param <T> 对象
+	 * @return map对象
+	 */
+	public static <T> Map<String,Object> beanToMap(T obj)
+	{
+		Map<String,Object> result = new HashMap<>();
+
+		try
+		{
+			if(obj != null)
+			{
+				BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+
+				PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+
+				for (PropertyDescriptor property : propertyDescriptors)
+				{
+					String propertyName = property.getName();
+
+					if (!propertyName.equals("class"))
+					{
+						Method getter = property.getReadMethod();
+
+						Object value = getter.invoke(obj);
+
+						result.put(propertyName,value);
+					}
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	/**
