@@ -33,6 +33,34 @@ public class XMLUtilsTest
 	}
 
 	@Test
+	public void testStringToMap()
+	{
+		String test = "<?xml version='1.0' encoding='iso-8859-1'?>";
+		test += "<xml>";
+		test += "<message test='11111' type='11' />";
+		test += "<OneRecord ";
+		test += "test0='2066648074' ";
+		test += "test1='1420895508' ";
+		test += "test2='4150201310' ";
+		test += "test3='549553939' ";
+		test += "ctest0='587339464' ";
+		test += "ctest1='281252274' ";
+		test += "ctest2='896203839' ";
+		test += "ctest3='3515490974' ";
+		test += "status='0'  ";
+		test += "time='2019-06-12 14:19:52' ";
+		test += "region_name='afff' ";
+		test += "msg='33' ";
+		test += "city_name='' ";
+		test += "/>";
+		test += "</xml>";
+
+		Map<String,Object> data =  XMLUtils.stringToMap(test,"/xml/message");
+
+		System.out.println(data);
+	}
+
+	@Test
 	public void stringToBean()
 	{
 		String test = "<?xml version='1.0' encoding='iso-8859-1'?>";
@@ -54,6 +82,34 @@ public class XMLUtilsTest
 		test += "</OneRecord>";
 
 		TestRecord data =  XMLUtils.stringToBean(test, TestRecord.class);
+
+		System.out.println(data);
+	}
+
+	@Test
+	public void testStringToBean()
+	{
+		String test = "<?xml version='1.0' encoding='iso-8859-1'?>";
+		test += "<xml>";
+		test += "<message test='11111' type='11' />";
+		test += "<OneRecord ";
+		test += "test0='2066648074' ";
+		test += "test1='1420895508' ";
+		test += "test2='4150201310' ";
+		test += "test3='549553939' ";
+		test += "ctest0='587339464' ";
+		test += "ctest1='281252274' ";
+		test += "ctest2='896203839' ";
+		test += "ctest3='3515490974' ";
+		test += "status='0'  ";
+		test += "time='2019-06-12 14:19:52' ";
+		test += "region_name='afff' ";
+		test += "msg='33' ";
+		test += "city_name='' ";
+		test += "/>";
+		test += "</xml>";
+
+		TestRecord data =  XMLUtils.stringToBean(test,"/xml/OneRecord",TestRecord.class);
 
 		System.out.println(data);
 	}
