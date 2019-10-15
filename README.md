@@ -22,7 +22,17 @@
     - SystemUtils 获取系统信息的一般操作
     - UUIDUtils 关于uuid的方法
     - ZipUtils 关于zip操作的方法
-    
+
+#### maven依赖
+
+```
+<dependency>
+  <groupId>top.guokaicn</groupId>
+  <artifactId>gk-tools</artifactId>
+  <version>1.0.3</version>
+</dependency>
+```
+
 #### 使用说明
 
 该项目为多个工具类的集合，项目使用的maven依赖除基础使用的包外，都为provided，当该项目被其他项目使用的时候，需要去自己引用第三方包，以免依赖混乱
