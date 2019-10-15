@@ -281,6 +281,7 @@ public class FormatUtils
 	 * 获取格式化数字，格式：#0.00
 	 *
 	 * @param value 需要格式化的数字
+	 * @param format 格式
 	 * @return 结果
 	 */
 	public static String getFormatNumber(double value, String format)
@@ -294,6 +295,7 @@ public class FormatUtils
 	 * 获取格式化数字，格式：#0.00
 	 *
 	 * @param value 需要格式化的数字
+	 * @param format 格式
 	 * @return 结果
 	 */
 	public static String getFormatNumber(long value, String format)

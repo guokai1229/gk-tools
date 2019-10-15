@@ -49,9 +49,9 @@ public class DateUtils
 	/**
 	 * 把字符串通过提供的日期格式转换为date对象
 	 *
-	 * @param dateStr
-	 * @param format
-	 * @return
+	 * @param dateStr 时间字符串
+	 * @param format 时间格式
+	 * @return date对象
 	 */
 	public static Date toDate(String dateStr, String format)
 	{
@@ -70,9 +70,9 @@ public class DateUtils
 	/**
 	 * 把date对象通过提供的日期格式转换为字符串
 	 *
-	 * @param date
-	 * @param format
-	 * @return
+	 * @param date date对象
+	 * @param format 时间格式
+	 * @return 字符串
 	 */
 	public static String toStr(Date date, String format)
 	{
@@ -83,10 +83,10 @@ public class DateUtils
 	/**
 	 * 把字符串从一种日期格式，解析为另一种日期格式的字符串
 	 *
-	 * @param dateStr
-	 * @param format
-	 * @param showFormat
-	 * @return
+	 * @param dateStr 时间字符串
+	 * @param format 时间格式
+	 * @param showFormat 显示的格式
+	 * @return 字符串
 	 */
 	public static String parseDate(String dateStr, String format, String showFormat)
 	{
@@ -98,7 +98,8 @@ public class DateUtils
 	/**
 	 * 获得当前的年份
 	 *
-	 * @return
+	 * @param date date对象
+	 * @return 年份
 	 */
 	public static int getYear(Date date)
 	{
@@ -111,8 +112,8 @@ public class DateUtils
 	/**
 	 * 获得提供的时间的月份
 	 *
-	 * @param date
-	 * @return
+	 * @param date date对象
+	 * @return 月份
 	 */
 	public static int getMonth(Date date)
 	{
@@ -125,8 +126,8 @@ public class DateUtils
 	/**
 	 * 获得提供的时间的星期
 	 *
-	 * @param date
-	 * @return
+	 * @param date date对象
+	 * @return 星期
 	 */
 	public static int getWeekOfMonth(Date date)
 	{
@@ -139,8 +140,8 @@ public class DateUtils
 	/**
 	 * 获得提供的时间的天数
 	 *
-	 * @param date
-	 * @return
+	 * @param date date对象
+	 * @return 每月的天数
 	 */
 	public static int getDayOfMonth(Date date)
 	{
@@ -153,8 +154,8 @@ public class DateUtils
 	/**
 	 * 获得当前的小时
 	 *
-	 * @param date
-	 * @return
+	 * @param date date对象
+	 * @return 小时数
 	 */
 	public static int getHour(Date date)
 	{
@@ -167,7 +168,8 @@ public class DateUtils
 	/**
 	 * 获得当前的分钟数
 	 *
-	 * @return
+	 * @param date date对象
+	 * @return 分钟数
 	 */
 	public static int getMinute(Date date)
 	{
@@ -179,9 +181,9 @@ public class DateUtils
 	/**
 	 * 年的计算
 	 * 
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addYears(final Date date, final int amount)
 	{
@@ -190,9 +192,9 @@ public class DateUtils
 
 	/**
 	 * 月的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addMonths(final Date date, final int amount)
 	{
@@ -201,9 +203,9 @@ public class DateUtils
 	
 	/**
 	 * 星期的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addWeeks(final Date date, final int amount) 
 	{
@@ -212,9 +214,9 @@ public class DateUtils
 
 	/**
 	 * 天的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addDays(final Date date, final int amount) 
 	{
@@ -223,9 +225,9 @@ public class DateUtils
 	
 	/**
 	 * 小时的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addHours(final Date date, final int amount) 
 	{
@@ -234,9 +236,9 @@ public class DateUtils
 
 	/**
 	 * 分钟的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addMinutes(final Date date, final int amount) 
 	{
@@ -245,9 +247,9 @@ public class DateUtils
 	
 	/**
 	 * 秒的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addSeconds(final Date date, final int amount) 
 	{
@@ -256,9 +258,9 @@ public class DateUtils
 	
 	/**
 	 * 毫秒的计算
-	 * @param date
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	public static Date addMilliseconds(final Date date, final int amount) 
 	{
@@ -268,10 +270,10 @@ public class DateUtils
 	/**
 	 * 计算日期
 	 * 
-	 * @param date
-	 * @param calendarField
-	 * @param amount
-	 * @return
+	 * @param date date对象
+	 * @param calendarField 类型
+	 * @param amount 计算值
+	 * @return 结果
 	 */
 	private static Date add(final Date date, final int calendarField, final int amount)
 	{
@@ -288,8 +290,8 @@ public class DateUtils
 	/**
 	 * 获得两个日期之间相差的分钟数。（date1 - date2）
 	 *
-	 * @param date1
-	 * @param date2
+	 * @param date1 date对象1
+	 * @param date2 date对象2
 	 * @return 返回两个日期之间相差的分钟数值
 	 */
 	public static int intervalMinutes(Date date1, Date date2)
@@ -302,9 +304,9 @@ public class DateUtils
 	/**
 	 * 获得两个日期之间相差的秒数差（date1 - date2）
 	 *
-	 * @param date1
-	 * @param date2
-	 * @return
+	 * @param date1 date对象1
+	 * @param date2 date对象2
+	 * @return 结果
 	 */
 	public static int intervalSeconds(Date date1, Date date2)
 	{
@@ -314,10 +316,10 @@ public class DateUtils
 
 	/**
 	 * 判断两个日期是否同一天
-	 * 
-	 * @param date1
-	 * @param date2
-	 * @return
+	 *
+	 * @param date1 date对象1
+	 * @param date2 date对象2
+	 * @return 结果
 	 */
 	public static boolean isSameDay(final Date date1, final Date date2)
 	{
@@ -334,10 +336,10 @@ public class DateUtils
 
 	/**
 	 * 判断两个日期是否同一天
-	 * 
-	 * @param cal1
-	 * @param cal2
-	 * @return
+	 *
+	 * @param cal1 日期1
+	 * @param cal2 日期2
+	 * @return 结果
 	 */
 	public static boolean isSameDay(final Calendar cal1, final Calendar cal2)
 	{
@@ -350,10 +352,10 @@ public class DateUtils
 
 	/**
 	 * 判断是否同一时刻
-	 * 
-	 * @param date1
-	 * @param date2
-	 * @return
+	 *
+	 * @param date1 date对象1
+	 * @param date2 date对象2
+	 * @return 结果
 	 */
 	public static boolean isSameInstant(final Date date1, final Date date2)
 	{
@@ -367,9 +369,9 @@ public class DateUtils
 	/**
 	 * 判断是否同一时刻
 	 * 
-	 * @param cal1
-	 * @param cal2
-	 * @return
+	 * @param cal1 时间1
+	 * @param cal2 时间2
+	 * @return 结果
 	 */
 	public static boolean isSameInstant(final Calendar cal1, final Calendar cal2)
 	{

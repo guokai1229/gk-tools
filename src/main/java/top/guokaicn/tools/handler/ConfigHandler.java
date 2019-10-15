@@ -5,8 +5,6 @@ import top.guokaicn.tools.utils.FormatUtils;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public class ConfigHandler
 	/**
 	 * 创建CONFIG处理对象
 	 * 
-	 * @param param
+	 * @param param 参数
 	 */
 	public static void createConfig(Object param)
 	{
@@ -49,8 +47,9 @@ public class ConfigHandler
 
 	/**
 	 * 创建CONFIG处理对象
-	 * 
-	 * @param param
+	 *
+	 * @param key key值
+	 * @param param 参数
 	 */
 	public static void createConfig(String key, Object param)
 	{
@@ -74,7 +73,7 @@ public class ConfigHandler
 	/**
 	 * 获得全局配置文件对象
 	 * 
-	 * @return
+	 * @return 配置对象
 	 */
 	public static ConfigHandler getConfig()
 	{
@@ -83,8 +82,9 @@ public class ConfigHandler
 	
 	/**
 	 * 获得全局配置文件对象
-	 * 
-	 * @return
+	 *
+	 * @param key key值
+	 * @return 配置对象
 	 */
 	public static ConfigHandler getConfig(String key)
 	{
@@ -94,7 +94,7 @@ public class ConfigHandler
 	/**
 	 * 构造函数,通过文件地址来创建对象
 	 * 
-	 * @param pathAndfile
+	 * @param pathAndfile 文件路径
 	 */
 	public ConfigHandler(String pathAndfile)
 	{
@@ -104,11 +104,7 @@ public class ConfigHandler
 			InputStream in = new BufferedInputStream(new FileInputStream(pathAndfile));
 			config.load(in);
 		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -117,7 +113,7 @@ public class ConfigHandler
 	/**
 	 * 通过流对象来创建对象
 	 * 
-	 * @param inStream
+	 * @param inStream 输入流
 	 */
 	public ConfigHandler(InputStream inStream)
 	{
@@ -126,11 +122,7 @@ public class ConfigHandler
 			config = new Properties();
 			config.load(inStream);
 		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -139,8 +131,8 @@ public class ConfigHandler
 	/**
 	 * 获得string值
 	 * 
-	 * @param key
-	 * @return
+	 * @param key key值
+	 * @return 值
 	 */
 	public String getString(String key)
 	{
@@ -150,8 +142,9 @@ public class ConfigHandler
 	/**
 	 * 获得string值
 	 * 
-	 * @param key
-	 * @return
+	 * @param key key值
+	 * @param defaultValue 默认值
+	 * @return 值
 	 */
 	public String getString(String key, String defaultValue)
 	{
@@ -163,8 +156,8 @@ public class ConfigHandler
 	/**
 	 * 获得boolean值
 	 * 
-	 * @param key
-	 * @return
+	 * @param key key值
+	 * @return 值
 	 */
 	public boolean getBoolean(String key)
 	{
@@ -175,6 +168,9 @@ public class ConfigHandler
 
 	/**
 	 * 取出Boolean类型的Property，但以System的Property优先.如果都为Null则返回Default值,如果内容不为true/false则返回false.
+	 * @param key key值
+	 * @param defaultValue 默认值
+	 * @return 值
 	 */
 	public Boolean getBoolean(String key, boolean defaultValue)
 	{
@@ -188,8 +184,8 @@ public class ConfigHandler
 	/**
 	 * 获得int值
 	 * 
-	 * @param key
-	 * @return
+	 * @param key key值
+	 * @return 值
 	 */
 	public int getInt(String key)
 	{
@@ -200,9 +196,10 @@ public class ConfigHandler
 
 	/**
 	 * 获得int值
-	 * 
-	 * @param key
-	 * @return
+	 *
+	 * @param key key值
+	 * @param defaultValue 默认值
+	 * @return 值
 	 */
 	public int getInt(String key, int defaultValue)
 	{
@@ -216,8 +213,8 @@ public class ConfigHandler
 	/**
 	 * 获取list对象
 	 * 
-	 * @param key
-	 * @return
+	 * @param key key值
+	 * @return 值
 	 */
 	public List<String> getList(String key)
 	{
@@ -227,9 +224,9 @@ public class ConfigHandler
 	/**
 	 * 获取list对象
 	 * 
-	 * @param key
-	 * @param regex
-	 * @return
+	 * @param key key值
+	 * @param regex 切分字符串
+	 * @return 值
 	 */
 	public List<String> getList(String key, String regex)
 	{

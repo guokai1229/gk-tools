@@ -18,8 +18,8 @@ public class UUIDUtils
     
     /**
      * 把当前ip地址转为数值
-     * @param bytes
-     * @return 
+     * @param bytes 字节数据
+     * @return 数值
      */
     private static int IptoInt(byte[] bytes)
     {
@@ -33,6 +33,7 @@ public class UUIDUtils
     
     /**
      * 获取一个UUID
+	 * @return uuid数值
      */
     public static String getUUID()
     {
@@ -59,7 +60,7 @@ public class UUIDUtils
     /**
      * Unique across JVMs on this machine (unless they load this class in the
      * same quater second - very unlikely)
-     * @return 
+     * @return jvm数据
      */
     private int getJVM()
     {
@@ -69,7 +70,7 @@ public class UUIDUtils
     /**
      * Unique in a millisecond for this JVM instance (unless there are >
      * Short.MAX_VALUE instances created in a millisecond)
-     * @return 
+     * @return 已经创建的实例数量
      */
     private short getCount()
     {
@@ -85,7 +86,7 @@ public class UUIDUtils
 
     /**
      * Unique in a local network
-     * @return 
+     * @return ip数据
      */
     private int getIP()
     {
@@ -94,20 +95,29 @@ public class UUIDUtils
 
     /**
      * Unique down to millisecond
-     * @return 
+     * @return 毫秒数据
      */
     private short getHiTime()
     {
         return (short) (System.currentTimeMillis() >>> 32);
     }
 
-    private int getLoTime()
+	/**
+	 * 返回系统时间
+	 * @return 系统毫秒数
+	 */
+	private int getLoTime()
     {
         return (int) System.currentTimeMillis();
     }
 
     private final static String sep = "";
 
+	/**
+	 * 格式化
+	 * @param intval intval
+	 * @return 字符串
+	 */
     private String format(int intval)
     {
         String formatted = Integer.toHexString(intval);
@@ -116,7 +126,12 @@ public class UUIDUtils
         return buf.toString();
     }
 
-    private String format(short shortval)
+	/**
+	 * 格式化
+	 * @param shortval shortval
+	 * @return 字符串
+	 */
+	private String format(short shortval)
     {
         String formatted = Integer.toHexString(shortval);
         StringBuilder buf = new StringBuilder("0000");
@@ -125,7 +140,7 @@ public class UUIDUtils
     }
     /**
      * 生成一串唯一的标示符
-     * @return 
+     * @return 生成一个唯一标识符
      */
     private Serializable generate()
     {

@@ -14,6 +14,7 @@ public class SystemUtils
 {
 	/**
 	 * 获取当前工作目录
+	 * @return 结果
 	 */
 	public static String getUserDir()
 	{
@@ -22,6 +23,7 @@ public class SystemUtils
 
 	/**
 	 * 获取当前用户名称
+	 * @return 结果
 	 */
 	public static String getUserName()
 	{
@@ -30,6 +32,7 @@ public class SystemUtils
 
 	/**
 	 * 获取用户的根目录
+	 * @return 结果
 	 */
 	public static String getUserHome()
 	{
@@ -38,6 +41,7 @@ public class SystemUtils
 
 	/**
 	 * 获取JRE目录
+	 * @return 结果
 	 */
 	public static String getJavaJreHome()
 	{
@@ -46,6 +50,7 @@ public class SystemUtils
 
 	/**
 	 * 获取操作系统的名称
+	 * @return 结果
 	 */
 	public static String getOsName()
 	{
@@ -54,6 +59,7 @@ public class SystemUtils
 
 	/**
 	 * 获取操作系统的版本
+	 * @return 结果
 	 */
 	public static String getOsVersion()
 	{
@@ -62,6 +68,7 @@ public class SystemUtils
 
 	/**
 	 * 获取java的版本
+	 * @return 结果
 	 */
 	public static String getJavaVersion()
 	{
@@ -70,6 +77,7 @@ public class SystemUtils
 
 	/**
 	 * 获取CLASS路径
+	 * @return 结果
 	 */
 	public static String getClassPath()
 	{
@@ -78,6 +86,7 @@ public class SystemUtils
 
 	/**
 	 * 获取目录分割符
+	 * @return 结果
 	 */
 	public static String getPathSeparator()
 	{
@@ -86,6 +95,7 @@ public class SystemUtils
 
 	/**
 	 * 获取文件分隔符
+	 * @return 结果
 	 */
 	public static String getFileSeparator()
 	{
@@ -119,6 +129,7 @@ public class SystemUtils
 
 	/**
 	 * 获取默认的文件编码
+	 * @return 结果
 	 */
 	public static String getFileEncoding()
 	{
@@ -127,6 +138,7 @@ public class SystemUtils
 
 	/**
 	 * 获取当前系统换行符
+	 * @return 结果
 	 */
 	public static String getSystemLineSeparator()
 	{
@@ -143,6 +155,7 @@ public class SystemUtils
 
 	/**
 	 * 获取机器HOST
+	 * @return 结果
 	 */
 	public static String getHostName()
 	{
@@ -164,6 +177,7 @@ public class SystemUtils
 
 	/**
 	 * 获取机器IP地址
+	 * @return 结果
 	 */
 	public static String getHostIP()
 	{

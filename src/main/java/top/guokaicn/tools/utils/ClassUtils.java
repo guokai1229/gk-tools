@@ -132,12 +132,10 @@ public class ClassUtils
 
 	/**
 	 * 通过类名实例化对象
-	 * 
-	 * @param clazz
-	 *            类名
-	 * @return 对象
+	 * @param clazz 类名
+	 * @param <T> 实例
+	 * @return 实例
 	 */
-
 	public static <T> T newInstance(String clazz)
 	{
 		T t = null;
@@ -156,10 +154,9 @@ public class ClassUtils
 
 	/**
 	 * 通过class对象实例化对象
-	 * 
-	 * @param clazz
-	 *            类
-	 * @return 对象
+	 * @param clazz 类名
+	 * @param <T> 实例
+	 * @return 实例
 	 */
 	public static <T> T newInstance(Class<T> clazz)
 	{
@@ -167,7 +164,7 @@ public class ClassUtils
 
 		try
 		{
-			t = (T) clazz.newInstance();
+			t = clazz.newInstance();
 		}
 		catch (Exception e)
 		{
@@ -179,10 +176,10 @@ public class ClassUtils
 
 	/**
 	 * 通过class对象和构造函数参数实例化对象
-	 * 
-	 * @param clazz
-	 *            类
-	 * @return 对象
+	 * @param clazz 类名
+	 * @param params 参数
+	 * @param <T> 实例
+	 * @return 实例
 	 */
 	public static <T> T newInstance(Class<T> clazz, Object... params)
 	{
@@ -205,17 +202,11 @@ public class ClassUtils
 		return t;
 	}
 
-
-
 	/**
 	 * 查找方法
-	 * 
-	 * @param clazz
-	 *            类
-	 * @param methodName
-	 *            方法名
-	 * @param paramTypes
-	 *            参数类型
+	 * @param clazz 类名
+	 * @param methodName 方法名
+	 * @param paramTypes 参数类型
 	 * @return 方法
 	 */
 	public static Method findMethod(Class<?> clazz, String methodName, Class<?>... paramTypes)
@@ -232,14 +223,10 @@ public class ClassUtils
 
 	/**
 	 * 查找所有方法
-	 * 
-	 * @param clazz
-	 *            类
-	 * @param methodName
-	 *            方法名
-	 * @param paramTypes
-	 *            参数类型
-	 * @return Method
+	 * @param clazz 类名
+	 * @param methodName 方法名
+	 * @param paramTypes 参数类型
+	 * @return 方法
 	 */
 	public static Method findDeclaredMethod(Class<?> clazz, String methodName, Class<?>... paramTypes)
 	{
@@ -258,14 +245,11 @@ public class ClassUtils
 		}
 	}
 
-
 	/**
 	 * 加载类并初始化
-	 * 
-	 * @param <T>
-	 * @param className
-	 *            类名
-	 * @return 类
+	 * @param className 类名
+	 * @param <T> 实例
+	 * @return 实例
 	 */
 	public static <T> Class<T> loadClass(String className)
 	{
@@ -274,13 +258,10 @@ public class ClassUtils
 
 	/**
 	 * 加载类
-	 * 
-	 * @param <T>
-	 * @param className
-	 *            类名
-	 * @param isInitialized
-	 *            是否初始化
-	 * @return 类
+	 * @param className 类名
+	 * @param isInitialized 是否初始化
+	 * @param <T> 实例
+	 * @return 实例
 	 */
 	public static <T> Class<T> loadClass(String className, boolean isInitialized)
 	{
@@ -298,9 +279,7 @@ public class ClassUtils
 
 	/**
 	 * 获得对象数组的类数组
-	 * 
-	 * @param objects
-	 *            对象数组
+	 * @param objects 对象数组
 	 * @return 类数组
 	 */
 	public static Class<?>[] getClasses(Object... objects)
@@ -314,11 +293,10 @@ public class ClassUtils
 		return classes;
 	}
 
-
 	/**
-	 * @param file
-	 *            文件
-	 * @return 是否为类文件
+	 * 判断文件是否为class文件
+	 * @param file 文件
+	 * @return 结果
 	 */
 	public static boolean isClassFile(File file)
 	{
@@ -326,9 +304,9 @@ public class ClassUtils
 	}
 
 	/**
-	 * @param file
-	 *            文件
-	 * @return 是否为Jar文件
+	 * 判断文件是否为jar文件
+	 * @param file 文件
+	 * @return 结果
 	 */
 	public static boolean isJarFile(File file)
 	{
@@ -336,9 +314,9 @@ public class ClassUtils
 	}
 
 	/**
-	 * @param fileName
-	 *            文件名
-	 * @return 是否为类文件
+	 * 判断是否为class
+	 * @param fileName 名称
+	 * @return 结果
 	 */
 	private static boolean isClass(String fileName)
 	{

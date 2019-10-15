@@ -16,6 +16,7 @@ public class ZipUtils
 	 * @param sourceFilePath 待压缩的文件路径
 	 * @param zipFilePath 压缩后存放路径
 	 * @param fileName 压缩后文件的名称
+	 * @throws Exception 错误
 	 * @return 压缩后文件路径
 	 */
 	public static String fileToZip(String sourceFilePath, String zipFilePath, String fileName) throws Exception
@@ -80,6 +81,7 @@ public class ZipUtils
 	 * @param name            :压缩后的名称
 	 * @param zipFilePath :压缩后存放路径
 	 * @param fileName    :压缩后文件的名称
+	 * @throws Exception 错误
 	 * @return 结果
 	 */
 	public static String streamToZip(InputStream inputStream, String name, String zipFilePath, String fileName) throws Exception

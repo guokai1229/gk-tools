@@ -140,6 +140,7 @@ public class FileUtils
 	 *            文件路径及名称例如：D:\\xxx.txt"
 	 * @param append
 	 *            是否追加
+	 * @return 结果
 	 */
 	public static BufferedWriter getFileWriter(String filePathAndName,boolean append)
 	{
@@ -168,6 +169,7 @@ public class FileUtils
 	 *            文件编码
 	 * @param append
 	 *            是否追加
+	 * @return 结果
 	 */
 	public static BufferedWriter getFileWriter(File file, String encoding,boolean append)
 	{
@@ -321,7 +323,7 @@ public class FileUtils
 	 * 返回路径下的所有文件列表
 	 *
 	 * @param filePath 文件路径
-	 * @return List<File>
+	 * @return 结果
 	 */
 	public static List<File> getFileList(String filePath)
 	{
@@ -334,7 +336,7 @@ public class FileUtils
 	 * 返回路径下的所有文件列表
 	 *
 	 * @param file 文件对象
-	 * @return List<File>
+	 * @return 结果
 	 */
 	public static List<File> getFileList(File file)
 	{
