@@ -25,7 +25,7 @@ public class JSONUtilsTest
 	@Test
 	public void stringToObject()
 	{
-		List list = JSONUtils.stringToObject("[\"123\",\"sdf\"]",List.class);
+		List list = JSONUtils.stringToObject("['123',\"sdf\"]",List.class);
 
 		System.out.println(list);
 	}

@@ -1,5 +1,6 @@
 package top.guokaicn.tools.utils;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,7 +13,17 @@ import java.util.List;
 
 public class JSONUtils
 {
-	private static volatile ObjectMapper mapper = new ObjectMapper();
+	private static volatile ObjectMapper mapper;
+
+	//初始化ObjectMapper
+	static
+	{
+		mapper = new ObjectMapper();
+		//解析使用Java/C++ 样式的注释（包括'/'+'*' 和'//' 变量）
+		mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+		//允许单引号来包住属性名称和字符串值
+		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+	}
 
 	/**
 	 * 对象转换为json字符串
