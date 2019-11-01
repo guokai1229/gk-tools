@@ -61,4 +61,18 @@ public class JSONUtilsTest
 
 		System.out.println(array);
 	}
+
+	@Test
+	public void objectToJsonObject()
+	{
+		List<String> list = new ArrayList<String>();
+
+		list.add("123");
+
+		list.add("sdf");
+
+		JsonNode node = JSONUtils.objectToJsonObject(list);
+
+		System.out.println(node);
+	}
 }

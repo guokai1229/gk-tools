@@ -1,13 +1,6 @@
 package top.guokaicn.tools.utils;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.io.File;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * class工具类 ,用来处理java的反射的一般方法
  * 
@@ -16,92 +9,6 @@ import java.util.Map;
  */
 public class ClassUtils
 {
-
-	/**
-	 * map转换为bean对象
-	 * @param map 数据
-	 * @param clazz class名称
-	 * @param <T> 对象
-	 * @return 数据
-	 */
-	public static <T> T mapToBean(Map<String,Object> map,Class clazz)
-	{
-		T bean = null;
-
-		try
-		{
-			bean = (T) clazz.newInstance();
-
-			PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
-
-			for (PropertyDescriptor property : propertyDescriptors)
-			{
-				String propertyName = property.getName();
-
-				Object value = map.get(propertyName);
-
-				if(value != null)
-				{
-					Method setter = property.getWriteMethod();
-
-					Class paramtypes = setter.getParameterTypes()[0];
-
-					if(value.getClass().equals(paramtypes))
-					{
-						setter.invoke(bean, value);
-					}
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		return bean;
-	}
-
-	/**
-	 * bean转换为map对象
-	 * @param obj 对象
-	 * @param <T> 对象
-	 * @return map对象
-	 */
-	public static <T> Map<String,Object> beanToMap(T obj)
-	{
-		Map<String,Object> result = new HashMap<>();
-
-		try
-		{
-			if(obj != null)
-			{
-				BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
-
-				PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-
-				for (PropertyDescriptor property : propertyDescriptors)
-				{
-					String propertyName = property.getName();
-
-					if (!propertyName.equals("class"))
-					{
-						Method getter = property.getReadMethod();
-
-						Object value = getter.invoke(obj);
-
-						result.put(propertyName,value);
-					}
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		return result;
-	}
-
 	/**
 	 * 获得class loader<br>
 	 * 若当前线程class loader不存在，取当前类的class loader
@@ -142,7 +49,12 @@ public class ClassUtils
 
 		try
 		{
-			t = (T) Class.forName(clazz).newInstance();
+			Class cla = loadClass(clazz);
+
+			if(cla != null)
+			{
+				t = (T) cla.newInstance();
+			}
 		}
 		catch (Exception e)
 		{
@@ -248,33 +160,36 @@ public class ClassUtils
 	/**
 	 * 加载类并初始化
 	 * @param className 类名
-	 * @param <T> 实例
 	 * @return 实例
 	 */
-	public static <T> Class<T> loadClass(String className)
+	public static Class loadClass(String className)
 	{
-		return loadClass(className, true);
+		try
+		{
+			return org.apache.commons.lang.ClassUtils.getClass(className);
+		}
+		catch (ClassNotFoundException e)
+		{
+			return null;
+		}
 	}
 
 	/**
 	 * 加载类
 	 * @param className 类名
 	 * @param isInitialized 是否初始化
-	 * @param <T> 实例
 	 * @return 实例
 	 */
-	public static <T> Class<T> loadClass(String className, boolean isInitialized)
+	public static Class loadClass(String className, boolean isInitialized)
 	{
-		Class<T> clazz = null;
 		try
 		{
-			clazz = (Class<T>) Class.forName(className, isInitialized, getClassLoader());
+			return org.apache.commons.lang.ClassUtils.getClass(getClassLoader(),className,isInitialized);
 		}
 		catch (ClassNotFoundException e)
 		{
-			e.printStackTrace();
+			return null;
 		}
-		return clazz;
 	}
 
 	/**
@@ -292,35 +207,4 @@ public class ClassUtils
 		}
 		return classes;
 	}
-
-	/**
-	 * 判断文件是否为class文件
-	 * @param file 文件
-	 * @return 结果
-	 */
-	public static boolean isClassFile(File file)
-	{
-		return isClass(file.getName());
-	}
-
-	/**
-	 * 判断文件是否为jar文件
-	 * @param file 文件
-	 * @return 结果
-	 */
-	public static boolean isJarFile(File file)
-	{
-		return file.getName().endsWith(".jar");
-	}
-
-	/**
-	 * 判断是否为class
-	 * @param fileName 名称
-	 * @return 结果
-	 */
-	private static boolean isClass(String fileName)
-	{
-		return fileName.endsWith(".class");
-	}
-
 }

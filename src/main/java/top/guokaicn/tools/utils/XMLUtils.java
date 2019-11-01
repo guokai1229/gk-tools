@@ -117,7 +117,7 @@ public class XMLUtils
 
 		if(!instance.isEmpty())
 		{
-			t = ClassUtils.mapToBean(instance,tClass);
+			t = FormatUtils.mapToBean(instance,tClass);
 		}
 
 		return t;
@@ -139,7 +139,7 @@ public class XMLUtils
 
 		if(!instance.isEmpty())
 		{
-			t = ClassUtils.mapToBean(instance,tClass);
+			t = FormatUtils.mapToBean(instance,tClass);
 		}
 
 		return t;
