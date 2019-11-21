@@ -1,5 +1,8 @@
 package top.guokaicn.tools.security;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
+
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +13,28 @@ import java.security.SecureRandom;
  */
 public class AESUtils
 {
+
+	/**
+	 * 加密结果再进行base64加密
+	 * @param content
+	 *            待加密内容
+	 * @param key
+	 *            加密的密钥
+	 * @return 结果
+	 */
+	public static String encryptBase64(String content, String key)
+	{
+		String result = null;
+
+		String aes_result = encrypt(content, key);
+
+		if(StringUtils.isNotBlank(aes_result))
+		{
+			result = Base64.encodeBase64String(aes_result.getBytes());
+		}
+
+		return result;
+	}
 	/**
 	 * 加密
 	 *
@@ -51,6 +76,21 @@ public class AESUtils
 		}
 
 		return null;
+	}
+
+	/**
+	 * 解密base64的字符串
+	 * @param content 待加密内容
+	 * @param key     加密的密钥
+	 * @return 结果
+	 */
+	public static String decryptBase64(String content, String key)
+	{
+		byte[] content_data = Base64.decodeBase64(content);
+
+		content = new String(content_data);
+
+		return decrypt(content, key);
 	}
 
 	/**
