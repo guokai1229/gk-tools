@@ -8,6 +8,16 @@ import org.apache.commons.lang.StringUtils;
  */
 public class MD5Utils
 {
+
+	/**
+	 * 对文本进行MD5加密
+	 * @param plainText 要进行加密的文本
+	 * @return 加密后的内容
+	 */
+	public static String encrypt(String plainText)
+	{
+		return encrypt(plainText,32);
+	}
 	/**
 	 * 对文本进行MD5加密
 	 *

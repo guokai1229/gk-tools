@@ -14,4 +14,12 @@ public class MD5UtilsTest
 
 		System.out.println(result);
 	}
+
+	@Test
+	public void encrypttest()
+	{
+		String result = MD5Utils.encrypt("BomcAccountQuery2019-11-07 15:06:434abomc");
+
+		System.out.println(result);
+	}
 }
