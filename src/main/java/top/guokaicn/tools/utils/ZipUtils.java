@@ -13,16 +13,15 @@ public class ZipUtils
 {
 	/**
 	 * 将sourceFilePath源文件，打包成fileName名称的zip文件，并存放到zipFilePath路径下
+	 *
 	 * @param sourceFilePath 待压缩的文件路径
-	 * @param zipFilePath 压缩后存放路径
-	 * @param fileName 压缩后文件的名称
-	 * @throws Exception 错误
+	 * @param zipFilePath    压缩后存放路径
+	 * @param fileName       压缩后文件的名称
 	 * @return 压缩后文件路径
+	 * @throws Exception 错误
 	 */
-	public static String fileToZip(String sourceFilePath, String zipFilePath, String fileName) throws Exception
+	public static String zip(String sourceFilePath, String zipFilePath, String fileName) throws Exception
 	{
-		String result = null;
-
 		File sourceFile = new File(sourceFilePath);
 
 		File zipFile = new File(zipFilePath + SystemUtils.getFileSeparator() + fileName + ".zip");
@@ -35,11 +34,36 @@ public class ZipUtils
 			}
 		}
 
-		fileToZipStream(sourceFile,new FileOutputStream(zipFile));
+		zip(sourceFile,new FileOutputStream(zipFile));
 
-		result = zipFile.getPath();
+		return zipFile.getPath();
+	}
 
-		return result;
+	/**
+	 * 将流的内容打包成fileName名称的zip文件，并存放到zipFilePath路径下
+	 *
+	 * @param inputStream :待压缩的输入流
+	 * @param name        :待压缩的名称
+	 * @param zipFilePath :压缩后存放路径
+	 * @param fileName    :压缩后文件的名称
+	 * @return 结果
+	 * @throws Exception 错误
+	 */
+	public static String zip(InputStream inputStream, String name, String zipFilePath, String fileName) throws Exception
+	{
+		File zipFile = new File(zipFilePath + SystemUtils.getFileSeparator() + fileName + ".zip");
+
+		if (zipFile.exists())
+		{
+			if(!zipFile.delete())
+			{
+				throw new Exception("删除原有文件失败");
+			}
+		}
+
+		zip(inputStream,name,new FileOutputStream(zipFile));
+
+		return zipFile.getPath();
 	}
 
 	/**
@@ -48,7 +72,7 @@ public class ZipUtils
 	 * @param out 输出
 	 * @throws Exception 错误
 	 */
-	public static void fileToZipStream(File sourceFile,OutputStream out) throws Exception
+	public static void zip(File sourceFile,OutputStream out) throws Exception
 	{
 		if (!sourceFile.exists())
 		{
@@ -61,7 +85,7 @@ public class ZipUtils
 			//如果是目录的话，压缩目录
 			if(sourceFile.isDirectory())
 			{
-				compressDirectory(sourceFile.getPath(),null,zos);
+				compressDirectory(sourceFile,zos,null);
 			}
 			else
 			{
@@ -75,45 +99,12 @@ public class ZipUtils
 	}
 
 	/**
-	 * 将流的内容打包成fileName名称的zip文件，并存放到zipFilePath路径下
-	 *
-	 * @param inputStream         :待压缩的文件路径
-	 * @param name            :压缩后的名称
-	 * @param zipFilePath :压缩后存放路径
-	 * @param fileName    :压缩后文件的名称
-	 * @throws Exception 错误
-	 * @return 结果
-	 */
-	public static String streamToZip(InputStream inputStream, String name, String zipFilePath, String fileName) throws Exception
-	{
-		String result = null;
-
-		File zipFile = new File(zipFilePath + SystemUtils.getFileSeparator() + fileName + ".zip");
-
-		if (zipFile.exists())
-		{
-			if(!zipFile.delete())
-			{
-				throw new Exception("删除原有文件失败");
-			}
-		}
-		else
-		{
-			streamToZipStream(inputStream,name,new FileOutputStream(zipFile));
-
-			result = zipFile.getPath();
-		}
-
-		return result;
-	}
-
-	/**
 	 * 将流集合的内容打包为zip数据输出到流中
 	 * @param streamMap 流集合的内容
 	 * @param out 输出
 	 * @throws Exception 错误
 	 */
-	public static void streamMapToZip(Map<String, InputStream> streamMap, OutputStream out) throws Exception
+	public static void zip(Map<String, InputStream> streamMap, OutputStream out) throws Exception
 	{
 		if(streamMap != null && !streamMap.isEmpty())
 		{
@@ -131,11 +122,11 @@ public class ZipUtils
 	/**
 	 * 将流的内容打包为zip数据输出到流中
 	 * @param inputStream 输入流
-	 * @param name 输入流名称
+	 * @param name 待压缩的名称
 	 * @param out 输出流
 	 * @throws Exception 错误
 	 */
-	public static void streamToZipStream(InputStream inputStream, String name, OutputStream out) throws Exception
+	public static void zip(InputStream inputStream, String name, OutputStream out) throws Exception
 	{
 		ZipOutputStream zos = new ZipOutputStream(out);
 
@@ -153,13 +144,11 @@ public class ZipUtils
 	 * @param out zip输出
 	 * @throws IOException 错误
 	 */
-	private static void compressDirectory(String directory,String basePath, ZipOutputStream out) throws IOException
+	private static void compressDirectory(File directory, ZipOutputStream out,String basePath) throws IOException
 	{
-		File fileToCompress = new File(directory);
+		List<File> contents = FileUtils.getFileList(directory);
 
-		List<File> contents = FileUtils.getFileList(fileToCompress);
-
-		basePath = StringUtils.defaultIfBlank(basePath,fileToCompress.getPath());
+		basePath = StringUtils.defaultIfBlank(basePath,directory.getPath());
 
 		for(File file : contents)
 		{
@@ -170,7 +159,9 @@ public class ZipUtils
 				//添加空目录
 				out.putNextEntry(new ZipEntry(entry_name));
 
-				compressDirectory(file.getPath(),basePath, out);
+				out.closeEntry();
+
+				compressDirectory(file,out,basePath);
 			}
 			else
 			{
