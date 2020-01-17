@@ -83,4 +83,28 @@ public class ZipUtilsTest
 		}
 	}
 
+	@Test
+	public void unZip()
+	{
+		try
+		{
+			String path = this.getClass().getResource("/").getFile();
+
+			FileUtils.createFile(path+"\\test\\测试\\xcf22.txt","tsetsetsetstsaetasetaset中文中文");
+
+			FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
+
+			String result = ZipUtils.zip(path+"\\test",path,"11");
+
+			System.out.println(result);
+
+			result = ZipUtils.unZip(result,path+"\\unzip");
+
+			System.out.println(result);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

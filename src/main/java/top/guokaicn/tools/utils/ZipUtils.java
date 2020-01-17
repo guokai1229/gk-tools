@@ -4,9 +4,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class ZipUtils
@@ -135,7 +137,84 @@ public class ZipUtils
 		zos.close();
 	}
 
+	/**
+	 * 解压文件
+	 * @param zipFilePath 压缩文件路径及文件名称
+	 * @param descDir 解压路径
+	 * @return 解压路径
+	 * @throws Exception 错误
+	 */
+	public static String unZip(String zipFilePath, String descDir) throws Exception
+	{
+		File zipFile = new File(zipFilePath);
 
+		File descDirectory = new File(descDir);
+
+		if(!descDirectory.exists())
+		{
+			FileUtils.createFolder(descDir);
+		}
+
+		return unZip(zipFile,descDirectory);
+	}
+
+	/**
+	 * 解压文件
+	 * @param zipFile 压缩文件
+	 * @param descDirectory 解压路径
+	 * @return 解压路径
+	 * @throws Exception 错误
+	 */
+	public static String unZip(File zipFile, File descDirectory) throws Exception
+	{
+		ZipFile zip = new ZipFile(zipFile);
+
+		Enumeration<?> entries = zip.entries();
+
+		while (entries.hasMoreElements())
+		{
+			ZipEntry entry = (ZipEntry) entries.nextElement();
+
+			String dirPath = descDirectory.getPath() + SystemUtils.getFileSeparator() + entry.getName();
+
+			// 如果是文件夹，就创建个文件夹
+			if (entry.isDirectory())
+			{
+				FileUtils.createFolder(dirPath);
+			}
+			else
+			{
+				// 如果是文件，就先创建一个文件，然后用io流把内容copy过去
+				File targetFile = new File(dirPath);
+
+				// 保证这个文件的父文件夹必须要存在
+				if(!targetFile.getParentFile().exists())
+				{
+					FileUtils.createFolder(targetFile.getParentFile().getPath());
+				}
+
+				boolean created = targetFile.createNewFile();
+
+				if(created)
+				{
+					// 将压缩文件内容写入到这个文件中
+					InputStream is = zip.getInputStream(entry);
+
+					FileOutputStream fos = new FileOutputStream(targetFile);
+
+					IOUtils.copy(is,fos);
+
+					fos.close();
+
+					is.close();
+				}
+			}
+		}
+
+		zip.close();
+
+		return descDirectory.getPath();
+	}
 
 	/**
 	 * 压缩目录文件
