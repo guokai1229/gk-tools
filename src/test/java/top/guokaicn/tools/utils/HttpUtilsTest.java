@@ -12,13 +12,11 @@ public class HttpUtilsTest
 	@Test
 	public void sendGet()
 	{
-		String url = "https://www.baidu.com/";
+		String url = "http://localhost:8080/,http://localhost:8081/,https://www.baidu.com/s";
 
 		Map<String, String> param_map = new HashMap<>();
 
-		param_map.put("id","122");
-		param_map.put("name","222");
-		param_map.put("pwd","333");
+		param_map.put("wd","123");
 
 		System.out.println(HttpUtils.sendGet(url,param_map));
 	}
@@ -26,7 +24,7 @@ public class HttpUtilsTest
 	@Test
 	public void sendGetTest()
 	{
-		String url = "https://www.baidu.com/";
+		String url = "http://localhost:8080/,http://localhost:8081/,https://www.baidu.com/s";
 
 		Map<String, String> param_map = new HashMap<>();
 
