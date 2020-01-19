@@ -342,4 +342,10 @@ public class FileUtilsTest
 
 		System.out.println(result);
 	}
+
+	@Test
+	public void getSize()
+	{
+		System.out.println(FileUtils.getSize(13131234));
+	}
 }

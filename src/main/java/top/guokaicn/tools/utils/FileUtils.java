@@ -3,6 +3,7 @@ package top.guokaicn.tools.utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,19 @@ import java.util.List;
  */
 public class FileUtils
 {
+	/**
+	 * 定义GB的计算常量
+	 */
+	private static final int GB = 1024 * 1024 * 1024;
+	/**
+	 * 定义MB的计算常量
+	 */
+	private static final int MB = 1024 * 1024;
+	/**
+	 * 定义KB的计算常量
+	 */
+	private static final int KB = 1024;
+
 	/**
 	 * 创建名称为 folderPath的文件夹
 	 *
@@ -629,5 +643,38 @@ public class FileUtils
 		}
 
 		return str;
+	}
+
+	/**
+	 * 文件大小转换
+	 * @param size 尺寸
+	 * @return 文件大小描述
+	 */
+	public static String getSize(long size)
+	{
+		String resultSize;
+
+		DecimalFormat DF = new DecimalFormat("0.00");
+
+		if (size / GB >= 1)
+		{
+			//如果当前Byte的值大于等于1GB
+			resultSize = DF.format(size / (float) GB) + "GB   ";
+		}
+		else if (size / MB >= 1)
+		{
+			//如果当前Byte的值大于等于1MB
+			resultSize = DF.format(size / (float) MB) + "MB   ";
+		}
+		else if (size / KB >= 1)
+		{
+			//如果当前Byte的值大于等于1KB
+			resultSize = DF.format(size / (float) KB) + "KB   ";
+		}
+		else
+		{
+			resultSize = size + "B   ";
+		}
+		return resultSize;
 	}
 }
