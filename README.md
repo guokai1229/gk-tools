@@ -7,7 +7,8 @@
 常用的工具类的封装
 
 #### 结构描述
-
+- common
+    - ResultCode 通用的返回结果Bean
 - handler 常用的处理对象，需要创建使用
     - ConfigHandler 配置工具类，包装properties文件及操作
 - security 安全相关的工具类
