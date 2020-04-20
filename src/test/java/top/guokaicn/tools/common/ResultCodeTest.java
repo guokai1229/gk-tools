@@ -25,6 +25,14 @@ public class ResultCodeTest
 	}
 
 	@Test
+	public void testOk1()
+	{
+		ResultCode result = ResultCode.ok(200,"测试成功");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
 	public void error()
 	{
 		ResultCode result = ResultCode.error();
@@ -41,6 +49,14 @@ public class ResultCodeTest
 	}
 
 	@Test
+	public void testError1()
+	{
+		ResultCode result = ResultCode.error(500,"测试错误");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
 	public void addData()
 	{
 		ResultCode result = ResultCode.ok("测试成功");
@@ -49,5 +65,6 @@ public class ResultCodeTest
 
 		System.out.println(JSONUtils.objectToString(result));
 	}
+
 
 }
