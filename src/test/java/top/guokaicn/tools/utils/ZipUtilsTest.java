@@ -1,5 +1,8 @@
 package top.guokaicn.tools.utils;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -11,19 +14,30 @@ import java.util.Map;
 
 public class ZipUtilsTest
 {
+	private final String testPath = this.getClass().getResource("/").getFile() + File.separator + "ziptest";
+
+	@Before
+	public void init()
+	{
+		FileUtils.createFolder(testPath);
+	}
+
+	@After
+	public void destory()
+	{
+		FileUtils.deleteFolder(testPath);
+	}
 
 	@Test
 	public void zip()
 	{
 		try
 		{
-			String path = this.getClass().getResource("/").getFile();
+			FileUtils.createFolder(testPath+"\\测试\\11\\xcf");
 
-			FileUtils.createFolder(path+"\\test\\测试\\11\\xcf");
+			String result = ZipUtils.zip(testPath,testPath,"11");
 
-			String result = ZipUtils.zip(path+"\\test",path,"11");
-
-			System.out.println(result);
+			Assert.assertNotNull(result);
 		}
 		catch (Exception e)
 		{
@@ -36,13 +50,11 @@ public class ZipUtilsTest
 	{
 		try
 		{
-			String path = this.getClass().getResource("/").getFile();
-
-			File file = FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
+			File file = FileUtils.createFile(testPath+"\\测试\\22\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
 
 			FileInputStream file_in = new FileInputStream(file);
 
-			String result = ZipUtils.zip(file_in,"xcf.txt",path,"11");
+			String result = ZipUtils.zip(file_in,"xcf.txt",testPath,"22");
 
 			System.out.println(result);
 		}
@@ -57,15 +69,13 @@ public class ZipUtilsTest
 	{
 		try
 		{
-			String path = this.getClass().getResource("/").getFile();
-
-			File file = FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
+			File file = FileUtils.createFile(testPath+"\\测试\\33\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
 
 			FileInputStream file_in = new FileInputStream(file);
 
 			FileInputStream file_in2 = new FileInputStream(file);
 
-			File zipFile = new File(path + SystemUtils.getFileSeparator() + "11.zip");
+			File zipFile = new File(testPath + File.separator + "33.zip");
 
 			Map<String, InputStream> streamMap = new HashMap<>();
 
@@ -90,15 +100,15 @@ public class ZipUtilsTest
 		{
 			String path = this.getClass().getResource("/").getFile();
 
-			FileUtils.createFile(path+"\\test\\测试\\xcf22.txt","tsetsetsetstsaetasetaset中文中文");
+			FileUtils.createFile(testPath+"\\测试\\44\\xcf22.txt","tsetsetsetstsaetasetaset中文中文");
 
-			FileUtils.createFile(path+"\\test\\测试\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
+			FileUtils.createFile(testPath+"\\测试\\44\\11\\xcf.txt","tsetsetsetstsaetasetaset中文中文");
 
-			String result = ZipUtils.zip(path+"\\test",path,"11");
+			String result = ZipUtils.zip(testPath+"\\测试",path,"44");
 
 			System.out.println(result);
 
-			result = ZipUtils.unZip(result,path+"\\unzip");
+			result = ZipUtils.unZip(result,testPath+"\\unzip");
 
 			System.out.println(result);
 		}
