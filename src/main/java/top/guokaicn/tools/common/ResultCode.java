@@ -35,12 +35,12 @@ public class ResultCode
 	/**
 	 * 时间戳
 	 */
-	private long timestamp = System.currentTimeMillis();
+	private final long timestamp = System.currentTimeMillis();
 
 	/**
 	 * 携带数据
 	 */
-	private Map<String, Object> data = new HashMap<>();
+	private Map<String, Object> data;
 
 	/**
 	 * 构造器私有
@@ -112,7 +112,7 @@ public class ResultCode
 	{
 		ResultCode resultCode = new ResultCode();
 
-		resultCode.success = true;
+		resultCode.success = false;
 
 		resultCode.message = "错误";
 
@@ -130,7 +130,7 @@ public class ResultCode
 	{
 		ResultCode resultCode = new ResultCode();
 
-		resultCode.success = true;
+		resultCode.success = false;
 
 		resultCode.message = message;
 
@@ -149,7 +149,7 @@ public class ResultCode
 	{
 		ResultCode resultCode = new ResultCode();
 
-		resultCode.success = true;
+		resultCode.success = false;
 
 		resultCode.message = message;
 
@@ -166,7 +166,42 @@ public class ResultCode
 	 */
 	public ResultCode addData(String key,Object value)
 	{
+		if(data == null)
+		{
+			data = new HashMap<>();
+		}
+
 		data.put(key,value);
+
+		return this;
+	}
+
+	/**
+	 * 移除数据
+	 * @param key key值
+	 * @return 使用链式编程，返回类本身
+	 */
+	public ResultCode removeData(String key)
+	{
+		if(data != null)
+		{
+			data.remove(key);
+		}
+
+		return this;
+	}
+
+	/**
+	 * 清除所有数据
+	 * @return 使用链式编程，返回类本身
+	 */
+	public ResultCode cleanData()
+	{
+		if(data != null)
+		{
+			data.clear();
+			data = null;
+		}
 
 		return this;
 	}

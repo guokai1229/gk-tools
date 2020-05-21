@@ -3,8 +3,6 @@ package top.guokaicn.tools.common;
 import org.junit.Test;
 import top.guokaicn.tools.utils.JSONUtils;
 
-import static org.junit.Assert.*;
-
 public class ResultCodeTest
 {
 
@@ -66,5 +64,27 @@ public class ResultCodeTest
 		System.out.println(JSONUtils.objectToString(result));
 	}
 
+	@Test
+	public void removeData()
+	{
+		ResultCode result = ResultCode.ok("测试成功");
 
+		result.addData("test","测试1").addData("test2","测试2");
+
+		result.removeData("test");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void cleanData()
+	{
+		ResultCode result = ResultCode.ok("测试成功");
+
+		result.addData("test","测试1").addData("test2","测试2");
+
+		result.cleanData();
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
 }
