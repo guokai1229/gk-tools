@@ -33,7 +33,7 @@
 <dependency>
   <groupId>top.guokaicn</groupId>
   <artifactId>gk-tools</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.6</version>
 </dependency>
 ```
 

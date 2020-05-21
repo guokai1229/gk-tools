@@ -78,7 +78,11 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		BufferedReader reader = FileUtils.getFileReader(path+"\\test.txt");
+		String file_path = path+"\\test\\测试\\33\\xcf.txt";
+
+		FileUtils.createFile(file_path,"tsetsetsetstsaetasetaset中文中文\ntsetsetsetstsaetasetaset中文中文\n");
+
+		BufferedReader reader = FileUtils.getFileReader(file_path);
 
 		while(true)
 		{
@@ -104,7 +108,11 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		BufferedReader reader = FileUtils.getFileReader(path+"\\test.txt","gbk");
+		String file_path = path+"\\test\\测试\\44\\xcf.txt";
+
+		FileUtils.createFile(file_path,"tsetsetsetstsaetasetaset中文中文\ntsetsetsetstsaetasetaset中文中文\n");
+
+		BufferedReader reader = FileUtils.getFileReader(file_path,"gbk");
 
 		while(true)
 		{
@@ -129,7 +137,11 @@ public class FileUtilsTest
 	{
 		String path = this.getClass().getResource("/").getFile();
 
-		File file = new File(path+"\\test.txt");
+		String file_path = path+"\\test\\测试\\55\\xcf.txt";
+
+		FileUtils.createFile(file_path,"tsetsetsetstsaetasetaset中文中文\ntsetsetsetstsaetasetaset中文中文\n");
+
+		File file = new File(file_path);
 
 		BufferedReader reader = FileUtils.getFileReader(file,"gbk");
 
