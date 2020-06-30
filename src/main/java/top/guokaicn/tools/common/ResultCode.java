@@ -11,11 +11,27 @@ public class ResultCode
 	/**
 	 * 成功编码
 	 */
-	private static final int SUCCESS_CODE = 20001;
+	private static final int SUCCESS_CODE = 200;
 	/**
 	 * 错误编码
 	 */
-	private static final int ERROR_CODE = 50001;
+	private static final int ERROR_CODE = 500;
+	/**
+	 * 错误请求错误
+	 */
+	private static final int BAD_REQUEST_CODE = 400;
+	/**
+	 * 需要认证错误
+	 */
+	private static final int UNAUTHORIZED_CODE = 401;
+	/**
+	 * 拒绝错误
+	 */
+	private static final int FORBIDDEN_CODE = 401;
+	/**
+	 * 未找到错误
+	 */
+	private static final int NOT_FOUND_CODE = 404;
 
 	/**
 	 * 是否成功标识
@@ -56,15 +72,7 @@ public class ResultCode
 	 */
 	public static ResultCode ok()
 	{
-		ResultCode resultCode = new ResultCode();
-
-		resultCode.success = true;
-
-		resultCode.message = "成功";
-
-		resultCode.code = SUCCESS_CODE;
-
-		return resultCode;
+		return ok(SUCCESS_CODE,"成功");
 	}
 
 	/**
@@ -74,15 +82,7 @@ public class ResultCode
 	 */
 	public static ResultCode ok(String message)
 	{
-		ResultCode resultCode = new ResultCode();
-
-		resultCode.success = true;
-
-		resultCode.message = message;
-
-		resultCode.code = SUCCESS_CODE;
-
-		return resultCode;
+		return ok(SUCCESS_CODE,message);
 	}
 
 	/**
@@ -110,15 +110,7 @@ public class ResultCode
 	 */
 	public static ResultCode error()
 	{
-		ResultCode resultCode = new ResultCode();
-
-		resultCode.success = false;
-
-		resultCode.message = "错误";
-
-		resultCode.code = ERROR_CODE;
-
-		return resultCode;
+		return error(ERROR_CODE,"错误");
 	}
 
 	/**
@@ -128,15 +120,7 @@ public class ResultCode
 	 */
 	public static ResultCode error(String message)
 	{
-		ResultCode resultCode = new ResultCode();
-
-		resultCode.success = false;
-
-		resultCode.message = message;
-
-		resultCode.code = ERROR_CODE;
-
-		return resultCode;
+		return error(ERROR_CODE,message);
 	}
 
 	/**
@@ -156,6 +140,82 @@ public class ResultCode
 		resultCode.code = code;
 
 		return resultCode;
+	}
+
+	/**
+	 * 获取错误的结果对象
+	 * @return 对象
+	 */
+	public static ResultCode badRequestError()
+	{
+		return error(BAD_REQUEST_CODE,"错误请求");
+	}
+
+	/**
+	 * 自定义返回结果文本描述
+	 * @param message 文本描述
+	 * @return 对象
+	 */
+	public static ResultCode badRequestError(String message)
+	{
+		return error(BAD_REQUEST_CODE,message);
+	}
+
+	/**
+	 * 获取错误的结果对象
+	 * @return 对象
+	 */
+	public static ResultCode unauthorizedError()
+	{
+		return error(UNAUTHORIZED_CODE,"错误请求");
+	}
+
+	/**
+	 * 自定义返回结果文本描述
+	 * @param message 文本描述
+	 * @return 对象
+	 */
+	public static ResultCode unauthorizedError(String message)
+	{
+		return error(UNAUTHORIZED_CODE,message);
+	}
+
+	/**
+	 * 获取错误的结果对象
+	 * @return 对象
+	 */
+	public static ResultCode forbiddenError()
+	{
+		return error(FORBIDDEN_CODE,"错误请求");
+	}
+
+	/**
+	 * 自定义返回结果文本描述
+	 * @param message 文本描述
+	 * @return 对象
+	 */
+	public static ResultCode forbiddenError(String message)
+	{
+		return error(FORBIDDEN_CODE,message);
+	}
+
+	/**
+	 * 获取错误的结果对象
+	 * @return 对象
+	 */
+	public static ResultCode notFoundError()
+	{
+		return error(NOT_FOUND_CODE,"错误请求");
+	}
+
+	/**
+	 * 自定义返回结果文本描述
+	 * @param message 文本描述
+	 * @return 对象
+	 */
+	public static ResultCode notFoundError(String message)
+	{
+		return error(NOT_FOUND_CODE,message);
 	}
 
 	/**

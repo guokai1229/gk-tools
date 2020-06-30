@@ -311,6 +311,14 @@ public class FileUtilsTest
 	}
 
 	@Test
+	public void joinFileSeparator()
+	{
+		String path = FileUtils.joinFileSeparator("c:","system","windows");
+
+		System.out.println(path);
+	}
+
+	@Test
 	public void getFileString()
 	{
 		String path = this.getClass().getResource("/").getFile();

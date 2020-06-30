@@ -103,31 +103,6 @@ public class SystemUtils
 	}
 
 	/**
-	 * 通过文件分隔符来连接文件路径
-	 * @param paths 路径数据
-	 * @return 结果
-	 */
-	public static String joinFileSeparator (String... paths)
-	{
-		StringBuilder result = new StringBuilder();
-
-		if(paths != null && paths.length>0)
-		{
-			for(int i=0;i<paths.length;i++)
-			{
-				result.append(paths[i]);
-
-				if(i < paths.length-1)
-				{
-					result.append(getFileSeparator());
-				}
-			}
-		}
-
-		return result.toString();
-	}
-
-	/**
 	 * 获取默认的文件编码
 	 * @return 结果
 	 */

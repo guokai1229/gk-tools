@@ -26,6 +26,8 @@
     - UUIDUtils 关于uuid的方法
     - ZipUtils 关于zip操作的方法
     - HttpUtils 关于http操作的方法
+    - AssertUtils 关于断言的简单判定
+    - BeanUtils 关于bean转换的一些简单操作
 
 #### maven依赖
 

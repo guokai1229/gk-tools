@@ -39,6 +39,70 @@ public class ResultCodeTest
 	}
 
 	@Test
+	public void badRequestError()
+	{
+		ResultCode result = ResultCode.badRequestError();
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void testBadRequestError()
+	{
+		ResultCode result = ResultCode.badRequestError("23232");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void unauthorizedError()
+	{
+		ResultCode result = ResultCode.unauthorizedError();
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void testUnauthorizedError()
+	{
+		ResultCode result = ResultCode.unauthorizedError("23232");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void forbiddenError()
+	{
+		ResultCode result = ResultCode.forbiddenError();
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void testForbiddenError()
+	{
+		ResultCode result = ResultCode.forbiddenError("23232");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void notFoundError()
+	{
+		ResultCode result = ResultCode.notFoundError();
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
+	public void testNotFoundError()
+	{
+		ResultCode result = ResultCode.notFoundError("23232");
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
 	public void testError()
 	{
 		ResultCode result = ResultCode.error("测试错误");
@@ -71,7 +135,7 @@ public class ResultCodeTest
 
 		result.addData("test","测试1").addData("test2","测试2");
 
-		result.removeData("test");
+		result.removeData("test").removeData("test2");
 
 		System.out.println(JSONUtils.objectToString(result));
 	}
@@ -83,7 +147,7 @@ public class ResultCodeTest
 
 		result.addData("test","测试1").addData("test2","测试2");
 
-		result.cleanData();
+		result = result.cleanData();
 
 		System.out.println(JSONUtils.objectToString(result));
 	}

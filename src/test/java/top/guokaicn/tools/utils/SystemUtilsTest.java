@@ -67,14 +67,6 @@ public class SystemUtilsTest
 	}
 
 	@Test
-	public void joinFileSeparator()
-	{
-		String path = SystemUtils.joinFileSeparator("c:","system","windows");
-
-		System.out.println(path);
-	}
-
-	@Test
 	public void getFileEncoding()
 	{
 		System.out.println(SystemUtils.getFileEncoding());
