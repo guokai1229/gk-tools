@@ -11,6 +11,11 @@
     - ResultCode 通用的返回结果Bean
 - handler 常用的处理对象，需要创建使用
     - ConfigHandler 配置工具类，包装properties文件及操作
+- lang 基础数据类型工具类
+    - tree
+        - Tree 树形基本对象
+        - TreeNode 树形对象接口
+        - TreeList 树形对象的根数据列表
 - security 安全相关的工具类
     - DESUtils des算法加解密的工具类
     - MD5Utils md5算法加解密的工具类
@@ -35,7 +40,7 @@
 <dependency>
   <groupId>top.guokaicn</groupId>
   <artifactId>gk-tools</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
 </dependency>
 ```
 
