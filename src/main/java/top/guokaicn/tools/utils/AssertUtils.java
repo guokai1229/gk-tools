@@ -1,5 +1,7 @@
 package top.guokaicn.tools.utils;
 
+import java.util.Date;
+
 /**
  * 简单的断言判定
  */
@@ -35,6 +37,16 @@ public class AssertUtils
         {
             throw new IllegalArgumentException(message);
         }
+    }
+
+    public static void isDate(Object object, String message)
+    {
+        isInstanceOf(Date.class,object,message);
+    }
+
+    public static void isString(Object object,String message)
+    {
+        isInstanceOf(String.class,object,message);
     }
 
     public static void isInstanceOf(Class<?> type, Object obj, String message)
