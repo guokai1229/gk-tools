@@ -33,6 +33,7 @@
     - HttpUtils 关于http操作的方法
     - AssertUtils 关于断言的简单判定
     - BeanUtils 关于bean转换的一些简单操作
+    - SnowIdUtils 关于雪花id算法的方法
 
 #### maven依赖
 
