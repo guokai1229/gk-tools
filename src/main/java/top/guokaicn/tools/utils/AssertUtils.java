@@ -20,6 +20,21 @@ public class AssertUtils
             throw new IllegalArgumentException(message);
         }
     }
+
+    /**
+     * 判定是否为True
+     * @param expression 判定值
+     * @param message 错误提示
+     */
+    public static void isTrue(Object expression, String message)
+    {
+        isInstanceOf(Boolean.class,expression,message);
+
+        if(!(Boolean) expression)
+        {
+            throw new IllegalArgumentException(message);
+        }
+    }
     /**
      * 判定是否为Flase
      * @param expression 判定值
@@ -28,6 +43,20 @@ public class AssertUtils
     public static void isFalse(boolean expression, String message)
     {
         if (expression)
+        {
+            throw new IllegalArgumentException(message);
+        }
+    }
+    /**
+     * 判定是否为Flase
+     * @param expression 判定值
+     * @param message 错误提示
+     */
+    public static void isFalse(Object expression, String message)
+    {
+        isInstanceOf(Boolean.class,expression,message);
+
+        if((Boolean) expression)
         {
             throw new IllegalArgumentException(message);
         }

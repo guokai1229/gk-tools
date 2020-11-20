@@ -3,6 +3,8 @@ package top.guokaicn.tools.utils;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AssertUtilsTest
 {
@@ -14,7 +16,16 @@ public class AssertUtilsTest
         {
             AssertUtils.isTrue(true, "true");
 
-            AssertUtils.isTrue(false, "false");
+//            AssertUtils.isTrue(false, "false");
+
+            Map<String,Object> test = new HashMap<>();
+
+            test.put("1",true);
+            test.put("2",false);
+
+            AssertUtils.isTrue(test.get("1"),"true");
+
+            AssertUtils.isTrue(test.get("2"),"false");
         }
         catch (Exception e)
         {
@@ -27,9 +38,18 @@ public class AssertUtilsTest
     {
         try
         {
-            AssertUtils.isFalse(true, "true");
+//            AssertUtils.isFalse(true, "true");
 
             AssertUtils.isFalse(false, "false");
+
+            Map<String,Object> test = new HashMap<>();
+
+            test.put("1",true);
+            test.put("2",false);
+
+            AssertUtils.isFalse(test.get("2"),"false");
+
+            AssertUtils.isFalse(test.get("1"),"true");
         }
         catch (Exception e)
         {

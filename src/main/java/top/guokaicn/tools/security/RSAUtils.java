@@ -1,12 +1,11 @@
 package top.guokaicn.tools.security;
 
-import org.apache.commons.codec.binary.Base64;
-
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 public class RSAUtils
 {
@@ -33,7 +32,7 @@ public class RSAUtils
 	{
 		PublicKey publicKey = keyPair.getPublic();
 		byte[] bytes = publicKey.getEncoded();
-		return Base64.encodeBase64String(bytes);
+		return Base64.getEncoder().encodeToString(bytes);
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class RSAUtils
 	{
 		PrivateKey privateKey = keyPair.getPrivate();
 		byte[] bytes = privateKey.getEncoded();
-		return Base64.encodeBase64String(bytes);
+		return Base64.getEncoder().encodeToString(bytes);
 	}
 
 	/**
@@ -58,7 +57,7 @@ public class RSAUtils
 	 */
 	public static PublicKey string2PublicKey(String pubStr) throws Exception
 	{
-		byte[] keyBytes = Base64.decodeBase64(pubStr);
+		byte[] keyBytes = Base64.getDecoder().decode(pubStr);
 		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 		return keyFactory.generatePublic(keySpec);
@@ -73,7 +72,7 @@ public class RSAUtils
 	 */
 	public static PrivateKey string2PrivateKey(String priStr) throws Exception
 	{
-		byte[] keyBytes = Base64.decodeBase64(priStr);
+		byte[] keyBytes = Base64.getDecoder().decode(priStr);
 		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 		return keyFactory.generatePrivate(keySpec);
@@ -104,7 +103,7 @@ public class RSAUtils
 	{
 		byte[] encryptContent = publicEncrypt(content.getBytes(StandardCharsets.UTF_8),publicKey);
 
-		return Base64.encodeBase64String(encryptContent);
+		return Base64.getEncoder().encodeToString(encryptContent);
 	}
 
 	/**
@@ -144,7 +143,7 @@ public class RSAUtils
 	 */
 	public static String privateDecryptBase64(String content,PrivateKey privateKey) throws Exception
 	{
-		byte[] decryptContent = privateDecrypt(Base64.decodeBase64(content),privateKey);
+		byte[] decryptContent = privateDecrypt(Base64.getDecoder().decode(content),privateKey);
 
 		return new String(decryptContent, StandardCharsets.UTF_8);
 	}
@@ -160,7 +159,7 @@ public class RSAUtils
 	{
 		PrivateKey privateKey = string2PrivateKey(privateKeyStr);
 
-		byte[] decryptContent = privateDecrypt(Base64.decodeBase64(content),privateKey);
+		byte[] decryptContent = privateDecrypt(Base64.getDecoder().decode(content),privateKey);
 
 		return new String(decryptContent, StandardCharsets.UTF_8);
 	}

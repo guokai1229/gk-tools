@@ -1,11 +1,11 @@
 package top.guokaicn.tools.security;
 
 import junit.framework.TestCase;
-import org.apache.commons.codec.binary.Base64;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Base64;
 
 public class RSAUtilsTest extends TestCase
 {
@@ -27,7 +27,7 @@ public class RSAUtilsTest extends TestCase
 		//用公钥加密
 		byte[] publicEncrypt = RSAUtils.publicEncrypt(message.getBytes(), publicKey);
 
-		System.out.println(Base64.encodeBase64String(publicEncrypt));
+		System.out.println(Base64.getEncoder().encodeToString(publicEncrypt));
 
 		System.out.println(new String(RSAUtils.privateDecrypt(publicEncrypt,privateKey)));
 

@@ -1,13 +1,12 @@
 package top.guokaicn.tools.security;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 /**
  * des加密工具类
@@ -26,7 +25,7 @@ public class DESUtils
 
 		if (result != null)
 		{
-			return Hex.encodeHexString(result);
+			return HexUtils.encode(result);
 		}
 
 		return null;
@@ -44,7 +43,7 @@ public class DESUtils
 
 		try
 		{
-			byte[] hex_result = Hex.decodeHex(src.toCharArray());
+			byte[] hex_result = HexUtils.decode(src);
 
 			byte[] decryResult = DESUtils.decrypt(hex_result, password);
 
@@ -71,7 +70,7 @@ public class DESUtils
 	{
 		byte[] result = DESUtils.encrypt(datasource.getBytes(), password);
 
-		return Base64.encodeBase64String(result);
+		return Base64.getEncoder().encodeToString(result);
 	}
 
 	/**
@@ -84,7 +83,7 @@ public class DESUtils
 	{
 		String result = null;
 
-		byte[] base64_result = Base64.decodeBase64(src.getBytes());
+		byte[] base64_result = Base64.getDecoder().decode(src.getBytes());
 
 		try
 		{

@@ -1,12 +1,12 @@
 package top.guokaicn.tools.security;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 /**
  * AES加密工具类
@@ -30,7 +30,7 @@ public class AESUtils
 
 		if(StringUtils.isNotBlank(aes_result))
 		{
-			result = Base64.encodeBase64String(aes_result.getBytes());
+			result = Base64.getEncoder().encodeToString(aes_result.getBytes());
 		}
 
 		return result;
@@ -86,7 +86,7 @@ public class AESUtils
 	 */
 	public static String decryptBase64(String content, String key)
 	{
-		byte[] content_data = Base64.decodeBase64(content);
+		byte[] content_data = Base64.getDecoder().decode(content);
 
 		content = new String(content_data);
 
