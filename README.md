@@ -21,6 +21,7 @@
     - DESUtils des算法加解密的工具类
     - MD5Utils md5算法加解密的工具类
     - AESUtils aes算法加解密的工具类
+    - RSAUtils rsa算法加解密的工具类
 - utils 工具类，可以直接通过调用静态方法使用
     - ClassUtils 对于class的一般操作
     - DateUtils 对于日期的一般操作
