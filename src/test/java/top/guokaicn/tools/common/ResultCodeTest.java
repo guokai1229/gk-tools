@@ -119,6 +119,16 @@ public class ResultCodeTest
 	}
 
 	@Test
+	public void testError2()
+	{
+		Exception e = new Exception("this is a ex");
+
+		ResultCode result = ResultCode.error(e);
+
+		System.out.println(JSONUtils.objectToString(result));
+	}
+
+	@Test
 	public void addData()
 	{
 		ResultCode result = ResultCode.ok("测试成功");
@@ -151,4 +161,6 @@ public class ResultCodeTest
 
 		System.out.println(JSONUtils.objectToString(result));
 	}
+
+
 }

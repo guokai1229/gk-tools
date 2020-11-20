@@ -124,6 +124,16 @@ public class ResultCode
 	}
 
 	/**
+	 * 根据Exception来返回结果对象
+	 * @param e 错误对象
+	 * @return 对象
+	 */
+	public static ResultCode error(Exception e)
+	{
+		return error(ERROR_CODE,e.getMessage());
+	}
+
+	/**
 	 * 自定义返回结果文本描述
 	 * @param code 错误编码
 	 * @param message 文本描述
