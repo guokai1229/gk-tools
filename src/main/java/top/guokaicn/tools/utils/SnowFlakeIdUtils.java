@@ -7,10 +7,6 @@ public class SnowFlakeIdUtils
 	 */
 	private static final SnowFlakeIdUtils SNOW_FLAKE = new SnowFlakeIdUtils();
 	/**
-	 * 起始的时间戳
-	 */
-	private final long START_TIMESTAMP = 1557489395327L;
-	/**
 	 * 序列号占用位数
 	 */
 	private final long SEQUENCE_BIT = 12;
@@ -19,21 +15,9 @@ public class SnowFlakeIdUtils
 	 */
 	private final long MACHINE_BIT = 10;
 	/**
-	 * 时间戳位移位数
-	 */
-	private final long TIMESTAMP_LEFT = SEQUENCE_BIT + MACHINE_BIT;
-	/**
-	 * 最大序列号  （4095）
-	 */
-	private final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
-	/**
-	 * 最大机器编号 （1023）
-	 */
-	private final long MAX_MACHINE_ID = ~(-1L << MACHINE_BIT);
-	/**
 	 * 生成id机器标识部分
 	 */
-	private long machineIdPart;
+	private final long machineIdPart;
 	/**
 	 * 序列号
 	 */
@@ -51,6 +35,8 @@ public class SnowFlakeIdUtils
 		//模拟这里获得本机机器编码
 		long localIp = 4321;
 		//localIp & MAX_MACHINE_ID最大不会超过1023,在左位移12位
+		//最大机器编号 （1023）
+		long MAX_MACHINE_ID = ~(-1L << MACHINE_BIT);
 		machineIdPart = (localIp & MAX_MACHINE_ID) << SEQUENCE_BIT;
 	}
 
@@ -92,6 +78,8 @@ public class SnowFlakeIdUtils
 		if (currentStamp == lastStamp)
 		{
 			// 每次+1
+			// 最大序列号  （4095）
+			long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
 			sequence = (sequence + 1) & MAX_SEQUENCE;
 			// 毫秒内序列溢出
 			if (sequence == 0)
@@ -107,6 +95,10 @@ public class SnowFlakeIdUtils
 		}
 		lastStamp = currentStamp;
 		//时间戳部分+机器标识部分+序列号部分
+		//起始的时间戳
+		long START_TIMESTAMP = 1557489395327L;
+		//时间戳位移位数
+		long TIMESTAMP_LEFT = SEQUENCE_BIT + MACHINE_BIT;
 		return (currentStamp - START_TIMESTAMP) << TIMESTAMP_LEFT | machineIdPart | sequence;
 	}
 
