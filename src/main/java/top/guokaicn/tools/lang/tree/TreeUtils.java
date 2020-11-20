@@ -25,7 +25,7 @@ public class TreeUtils
 			if(node.getParentId().equals(rootId))
 			{
 				result.add(node);
-				addChlid(source,node);
+				addChild(source,node);
 				if(node.getChildren() != null)
 				{
 					Collections.sort(node.getChildren());
@@ -67,14 +67,14 @@ public class TreeUtils
 	 * @param source 原始数据
 	 * @param parent 父节点对象
 	 */
-	private static void addChlid(List<? extends TreeNode> source,TreeNode parent)
+	private static void addChild(List<? extends TreeNode> source,TreeNode parent)
 	{
 		for(TreeNode node : source)
 		{
 			if(node.getParentId().equals(parent.getId()))
 			{
 				parent.addChild(node);
-				addChlid(source, node);
+				addChild(source, node);
 				if(node.getChildren() != null)
 				{
 					Collections.sort(node.getChildren());
