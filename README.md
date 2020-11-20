@@ -15,7 +15,8 @@
     - tree
         - Tree 树形基本对象
         - TreeNode 树形对象接口
-        - TreeList 树形对象的根数据列表
+        - TreeUtils 树形对象的通用工具方法
+        - TreeNodeParser 树形对象的解析接口
 - security 安全相关的工具类
     - DESUtils des算法加解密的工具类
     - MD5Utils md5算法加解密的工具类

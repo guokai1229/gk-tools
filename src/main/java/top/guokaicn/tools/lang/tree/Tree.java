@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 实现树形接口的通用对象，可以进行普通使用
  */
-public class Tree implements TreeNode
+public class Tree<T> implements TreeNode
 {
     private String id;
 
@@ -17,6 +17,8 @@ public class Tree implements TreeNode
     private Integer sort;
 
     private List<TreeNode> children;
+
+    private T data;
 
     @Override
     public String getId()
@@ -106,5 +108,15 @@ public class Tree implements TreeNode
         }
 
         return treeNode;
+    }
+
+    public T getData()
+    {
+        return data;
+    }
+
+    public void setData(T data)
+    {
+        this.data = data;
     }
 }
