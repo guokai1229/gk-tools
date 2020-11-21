@@ -12,7 +12,7 @@
 - handler 常用的处理对象，需要创建使用
     - ConfigHandler 配置工具类，包装properties文件及操作
 - lang 基础数据类型工具类
-    - tree
+    - tree 参考[hutool](https://github.com/looly/hutool/)中的Tree的实现，进行了简化
         - Tree 树形基本对象
         - TreeNode 树形对象接口
         - TreeUtils 树形对象的通用工具方法
