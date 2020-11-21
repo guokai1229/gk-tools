@@ -4,9 +4,8 @@ import org.apache.commons.lang.StringUtils;
 import top.guokaicn.tools.utils.FormatUtils;
 import top.guokaicn.tools.utils.UUIDUtils;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -59,6 +58,8 @@ public class ConfigHandler
 
 		if (param instanceof String)
 		{
+			File file = new File((String) param);
+
 			config = new ConfigHandler((String) param);
 		}
 		else if (param instanceof InputStream)
@@ -104,6 +105,25 @@ public class ConfigHandler
 		{
 			config = new Properties();
 			InputStream in = new BufferedInputStream(new FileInputStream(pathAndfile));
+			config.load(in);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 构造函数,通过文本内容来创建对象
+	 * @param content 文本内容
+	 * @param charset 编码格式
+	 */
+	public ConfigHandler(String content, Charset charset)
+	{
+		try
+		{
+			config = new Properties();
+			InputStream in = new ByteArrayInputStream(content.getBytes(charset));
 			config.load(in);
 		}
 		catch (Exception e)

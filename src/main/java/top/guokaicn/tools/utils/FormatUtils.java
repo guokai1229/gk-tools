@@ -326,7 +326,7 @@ public class FormatUtils
 		{
 			sb.append(s).append(separator);
 		}
-		return sb.toString().substring(0, sb.toString().length() - 1);
+		return sb.substring(0, sb.toString().length() - 1);
 	}
 
 	/**
