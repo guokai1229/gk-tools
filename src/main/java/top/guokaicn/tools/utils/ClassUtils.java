@@ -49,11 +49,11 @@ public class ClassUtils
 
 		try
 		{
-			Class cla = loadClass(clazz);
+			Class<T> cla = loadClass(clazz);
 
 			if(cla != null)
 			{
-				t = (T) cla.newInstance();
+				t = cla.newInstance();
 			}
 		}
 		catch (Exception e)

@@ -2,6 +2,7 @@ package top.guokaicn.tools.handler;
 
 import org.apache.commons.lang.StringUtils;
 import top.guokaicn.tools.utils.FormatUtils;
+import top.guokaicn.tools.utils.UUIDUtils;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -22,13 +23,13 @@ import java.util.Arrays;
 public class ConfigHandler
 {
 	/**
-	 * 默认名称
-	 */
-	private static String default_name = "C21F969B5F03D33D43E04F8F136E7682";
-	/**
 	 * properties文件配置对象
 	 */
 	private Properties config;
+	/**
+	 * 默认key对象
+	 */
+	private static String default_key;
 	/**
 	 * properties对象集合
 	 */
@@ -41,9 +42,10 @@ public class ConfigHandler
 	 */
 	public static void createConfig(Object param)
 	{
-		createConfig(default_name,param);
+		default_key = UUIDUtils.getUUID();
+		createConfig(default_key,param);
 	}
-	
+
 
 	/**
 	 * 创建CONFIG处理对象
@@ -77,7 +79,7 @@ public class ConfigHandler
 	 */
 	public static ConfigHandler getConfig()
 	{
-		return config_map.get(default_name);
+		return config_map.get(default_key);
 	}
 	
 	/**
