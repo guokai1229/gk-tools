@@ -1,10 +1,16 @@
 package top.guokaicn.tools.utils;
 
-import org.apache.commons.lang.StringUtils;
-import org.dom4j.*;
+import org.w3c.dom.*;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.io.StringReader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,31 +19,6 @@ import java.util.Map;
  */
 public class XMLUtils
 {
-	/**
-	 * xml的字符串转换为map对象，会通过转换完成以后的xml，查找对应的xpath，子标签和属性都会被放入key
-	 * @param content 字符串内容
-	 * @param xpath xpath
-	 * @return 数据
-	 */
-	public static Map<String,Object> stringToMap(String content,String xpath)
-	{
-		Map<String,Object> instance = null;
-
-		try
-		{
-			Document doc = DocumentHelper.parseText(content);
-
-			Element root = doc.getRootElement();
-
-			instance = stringToMap((Element) root.selectSingleNode(xpath));
-		}
-		catch (DocumentException e)
-		{
-			e.printStackTrace();
-		}
-
-		return instance;
-	}
 
 	/**
 	 * xml的字符串转换为map对象,子标签和属性都会被放入key
@@ -50,11 +31,42 @@ public class XMLUtils
 
 		try
 		{
-			Document doc = DocumentHelper.parseText(content);
-
-			instance = stringToMap(doc.getRootElement());
+			StringReader sr = new StringReader(content);
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder=factory.newDocumentBuilder();
+			Document doc = builder.parse(new InputSource(sr));
+			instance = stringToMap(doc.getDocumentElement());
 		}
-		catch (DocumentException e)
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return instance;
+	}
+
+	/**
+	 * xml的字符串转换为map对象，会通过转换完成以后的xml，查找对应的xpath，子标签和属性都会被放入key
+	 * @param content 字符串内容
+	 * @param xpath xpath
+	 * @return 数据
+	 */
+	public static Map<String,Object> stringToMap(String content,String xpath)
+	{
+		Map<String,Object> instance = null;
+
+		try
+		{
+			StringReader sr = new StringReader(content);
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder=factory.newDocumentBuilder();
+			Document doc = builder.parse(new InputSource(sr));
+			final XPath xPath = XPathFactory.newInstance().newXPath();
+			XPathExpression expr = xPath.compile(xpath);
+			Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+			instance = stringToMap(node);
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -67,31 +79,28 @@ public class XMLUtils
 	 * @param element Element元素
 	 * @return 数据
 	 */
-	public static Map<String,Object> stringToMap(Element element)
+	public static Map<String,Object> stringToMap(Node element)
 	{
 		Map<String,Object> instance = new HashMap<>();
 
 		try
 		{
-			List<Attribute> attributes =  element.attributes();
+			NamedNodeMap attributes =  element.getAttributes();
 
-			for(Attribute attr : attributes)
+			for(int i=0;i<attributes.getLength();i++)
 			{
-				instance.put(attr.getName(),attr.getValue());
+				instance.put(attributes.item(i).getNodeName(),attributes.item(i).getNodeValue());
 			}
 
-			List<Element> elements = element.elements();
+			NodeList elements = element.getChildNodes();
 
-			for(Element ele : elements)
+			for(int i=0;i<elements.getLength();i++)
 			{
-				String value = ele.getText();
+				String name = elements.item(i).getNodeName();
 
-				if(StringUtils.isBlank(value) && !ele.elements().isEmpty())
-				{
-					value = ele.asXML();
-				}
+				String value = elements.item(i).getTextContent();
 
-				instance.put(ele.getName(),value);
+				instance.put(name,value);
 			}
 		}
 		catch (Exception e)
