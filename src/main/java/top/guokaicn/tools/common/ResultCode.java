@@ -11,7 +11,7 @@ public class ResultCode
 	/**
 	 * 编码枚举对象
 	 */
-	enum CODE
+	private enum CODE
 	{
 		SUCCESS_CODE(200, "成功"),
 		ERROR_CODE(500, "错误"),
