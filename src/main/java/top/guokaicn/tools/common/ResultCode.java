@@ -9,29 +9,36 @@ import java.util.Map;
 public class ResultCode
 {
 	/**
-	 * 成功编码
+	 * 编码枚举对象
 	 */
-	private static final int SUCCESS_CODE = 200;
-	/**
-	 * 错误编码
-	 */
-	private static final int ERROR_CODE = 500;
-	/**
-	 * 错误请求错误
-	 */
-	private static final int BAD_REQUEST_CODE = 400;
-	/**
-	 * 需要认证错误
-	 */
-	private static final int UNAUTHORIZED_CODE = 401;
-	/**
-	 * 拒绝错误
-	 */
-	private static final int FORBIDDEN_CODE = 401;
-	/**
-	 * 未找到错误
-	 */
-	private static final int NOT_FOUND_CODE = 404;
+	enum CODE
+	{
+		SUCCESS_CODE(200, "成功"),
+		ERROR_CODE(500, "错误"),
+		BAD_REQUEST_CODE(200, "错误请求"),
+		UNAUTHORIZED_CODE(401, "需要认证错误"),
+		FORBIDDEN_CODE(401, "拒绝错误"),
+		NOT_FOUND_CODE(404, "未找到错误");
+
+		private final int code;
+		private final String description;
+
+		CODE(int code, String message)
+		{
+			this.code = code;
+			this.description = message;
+		}
+
+		public int getCode()
+		{
+			return code;
+		}
+
+		public String getDescription()
+		{
+			return description;
+		}
+	}
 
 	/**
 	 * 是否成功标识
@@ -72,7 +79,7 @@ public class ResultCode
 	 */
 	public static ResultCode ok()
 	{
-		return ok(SUCCESS_CODE,"成功");
+		return ok(CODE.SUCCESS_CODE.getCode(),CODE.SUCCESS_CODE.getDescription());
 	}
 
 	/**
@@ -82,7 +89,7 @@ public class ResultCode
 	 */
 	public static ResultCode ok(String message)
 	{
-		return ok(SUCCESS_CODE,message);
+		return ok(CODE.SUCCESS_CODE.getCode(),message);
 	}
 
 	/**
@@ -110,7 +117,7 @@ public class ResultCode
 	 */
 	public static ResultCode error()
 	{
-		return error(ERROR_CODE,"错误");
+		return error(CODE.ERROR_CODE.getCode(),CODE.ERROR_CODE.getDescription());
 	}
 
 	/**
@@ -120,7 +127,7 @@ public class ResultCode
 	 */
 	public static ResultCode error(String message)
 	{
-		return error(ERROR_CODE,message);
+		return error(CODE.ERROR_CODE.getCode(),message);
 	}
 
 	/**
@@ -130,7 +137,7 @@ public class ResultCode
 	 */
 	public static ResultCode error(Exception e)
 	{
-		return error(ERROR_CODE,e.getMessage());
+		return error(CODE.ERROR_CODE.getCode(),e.getMessage());
 	}
 
 	/**
@@ -158,7 +165,7 @@ public class ResultCode
 	 */
 	public static ResultCode badRequestError()
 	{
-		return error(BAD_REQUEST_CODE,"错误请求");
+		return error(CODE.BAD_REQUEST_CODE.getCode(),CODE.BAD_REQUEST_CODE.getDescription());
 	}
 
 	/**
@@ -168,7 +175,7 @@ public class ResultCode
 	 */
 	public static ResultCode badRequestError(String message)
 	{
-		return error(BAD_REQUEST_CODE,message);
+		return error(CODE.BAD_REQUEST_CODE.getCode(),message);
 	}
 
 	/**
@@ -177,7 +184,7 @@ public class ResultCode
 	 */
 	public static ResultCode unauthorizedError()
 	{
-		return error(UNAUTHORIZED_CODE,"错误请求");
+		return error(CODE.UNAUTHORIZED_CODE.getCode(),CODE.UNAUTHORIZED_CODE.getDescription());
 	}
 
 	/**
@@ -187,7 +194,7 @@ public class ResultCode
 	 */
 	public static ResultCode unauthorizedError(String message)
 	{
-		return error(UNAUTHORIZED_CODE,message);
+		return error(CODE.UNAUTHORIZED_CODE.getCode(),message);
 	}
 
 	/**
@@ -196,7 +203,7 @@ public class ResultCode
 	 */
 	public static ResultCode forbiddenError()
 	{
-		return error(FORBIDDEN_CODE,"错误请求");
+		return error(CODE.FORBIDDEN_CODE.getCode(),CODE.FORBIDDEN_CODE.getDescription());
 	}
 
 	/**
@@ -206,7 +213,7 @@ public class ResultCode
 	 */
 	public static ResultCode forbiddenError(String message)
 	{
-		return error(FORBIDDEN_CODE,message);
+		return error(CODE.FORBIDDEN_CODE.getCode(),message);
 	}
 
 	/**
@@ -215,7 +222,7 @@ public class ResultCode
 	 */
 	public static ResultCode notFoundError()
 	{
-		return error(NOT_FOUND_CODE,"错误请求");
+		return error(CODE.NOT_FOUND_CODE.getCode(),CODE.NOT_FOUND_CODE.getDescription());
 	}
 
 	/**
@@ -225,7 +232,7 @@ public class ResultCode
 	 */
 	public static ResultCode notFoundError(String message)
 	{
-		return error(NOT_FOUND_CODE,message);
+		return error(CODE.NOT_FOUND_CODE.getCode(),message);
 	}
 
 	/**
