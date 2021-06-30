@@ -580,6 +580,17 @@ public class FileUtils
 	}
 
 	/**
+	 * 复制流数据到文件中
+	 * @param source 流数据
+	 * @param destination 文件对象
+	 * @throws IOException 错误信息
+	 */
+	public static void copyInputStreamToFile(InputStream source, File destination) throws IOException
+	{
+		org.apache.commons.io.FileUtils.copyInputStreamToFile(source, destination);
+	}
+
+	/**
 	 * 获取相对路径
 	 *
 	 * @param fullPath
