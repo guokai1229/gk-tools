@@ -19,7 +19,7 @@ public class SnowFlakeIdUtilsTest extends TestCase
 		for (int i = 0; i < 100; i++) {
 			//创建100个线程
 			new Thread(() -> {
-				for (int s = 0; s < 20000; s++) {
+				for (int s = 0; s < 200; s++) {
 					long snowID = SnowFlakeIdUtils.uniqueLong();
 					System.out.println(snowID);
 					Integer put = map.get(snowID);
