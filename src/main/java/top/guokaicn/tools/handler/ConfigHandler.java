@@ -32,7 +32,7 @@ public class ConfigHandler
 	/**
 	 * properties对象集合
 	 */
-	private static final ConcurrentHashMap<String, ConfigHandler> config_map = new ConcurrentHashMap<String, ConfigHandler>();
+	private static final ConcurrentHashMap<String, ConfigHandler> config_map = new ConcurrentHashMap<>();
 
 	/**
 	 * 创建CONFIG处理对象

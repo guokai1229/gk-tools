@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class JSONUtilsTest
 {
@@ -74,5 +75,52 @@ public class JSONUtilsTest
 		JsonNode node = JSONUtils.objectToJsonObject(list);
 
 		System.out.println(node);
+	}
+
+    @Test
+    public void stringToMap()
+    {
+    	String testData = "{\"key\":\"123123\",\"value\":\"33333\"}";
+
+		Map<String,Object> data = JSONUtils.stringToMap(testData);
+
+		System.out.println(data);
+    }
+
+    @Test
+    public void testStringToMap()
+    {
+		String testData = "{\"key1\":{\"name\":\"2222\",\"age\":17},\"key2\":{\"name\":\"3333\",\"age\":16}}";
+
+		Map<String,TestData> data = JSONUtils.stringToMap(testData,TestData.class);
+
+		System.out.println(data);
+    }
+
+
+    static class TestData{
+		private String name;
+
+		private String age;
+
+		public String getName()
+		{
+			return name;
+		}
+
+		public void setName(String name)
+		{
+			this.name = name;
+		}
+
+		public String getAge()
+		{
+			return age;
+		}
+
+		public void setAge(String age)
+		{
+			this.age = age;
+		}
 	}
 }

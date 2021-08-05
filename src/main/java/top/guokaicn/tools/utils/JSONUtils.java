@@ -2,6 +2,7 @@ package top.guokaicn.tools.utils;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +10,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JSONUtils
 {
@@ -94,6 +97,64 @@ public class JSONUtils
 		}
 
 		return list;
+	}
+
+	/**
+	 * 字符串转普通的map对象
+	 * @param value 值
+	 * @return 结果
+	 */
+	public static Map<String,Object> stringToMap(String value)
+	{
+		Map<String,Object> map = null;
+
+		try
+		{
+			map = mapper.readValue(value, new TypeReference<Map<String,Object>>() { });
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return map;
+	}
+
+	/**
+	 * 字符串转为map
+	 * @param value 字符串
+	 * @param clazz 类
+	 * @param <T> 类型
+	 * @return 值
+	 */
+	public static<T> Map<String,T> stringToMap(String value, Class<T> clazz)
+	{
+		Map<String,T> map = null;
+
+		try
+		{
+			Map<String,Object> data = mapper.readValue(value, new TypeReference<Map<String,Object>>() { });
+
+			if(data != null)
+			{
+				map = new LinkedHashMap<>();
+
+				for(Map.Entry<String,Object> entry : data.entrySet())
+				{
+					String key = entry.getKey();
+
+					String val = objectToString(entry.getValue());
+
+					map.put(key,stringToObject(val,clazz));
+				}
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return map;
 	}
 
 	/**
