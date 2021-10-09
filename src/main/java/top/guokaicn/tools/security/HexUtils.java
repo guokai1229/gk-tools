@@ -4,6 +4,8 @@ public class HexUtils
 {
 	/**
 	 * 字节流转成十六进制表示
+	 * @param src 参数
+	 * @return 结果
 	 */
 	public static String encode(byte[] src)
 	{
@@ -19,6 +21,8 @@ public class HexUtils
 
 	/**
 	 * 字符串转成字节流
+	 * @param src 参数
+	 * @return 结果
 	 */
 	public static byte[] decode(String src)
 	{

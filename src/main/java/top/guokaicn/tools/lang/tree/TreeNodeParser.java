@@ -2,7 +2,7 @@ package top.guokaicn.tools.lang.tree;
 
 /**
  * 树形对象的解析接口，通常使用此接口的实现方法来进行节点转换
- * @param <T>
+ * @param <T> 类型
  */
 @FunctionalInterface
 public interface TreeNodeParser<T>

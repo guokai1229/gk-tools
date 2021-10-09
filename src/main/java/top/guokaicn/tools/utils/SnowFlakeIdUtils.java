@@ -63,6 +63,7 @@ public class SnowFlakeIdUtils
 
 	/**
 	 * 产生下一个ID
+	 * @return 结果
 	 */
 	public synchronized long nextId()
 	{
@@ -113,6 +114,7 @@ public class SnowFlakeIdUtils
 
 	/**
 	 * 获取long类型雪花ID
+	 * @return 结果
 	 */
 	public static String uniqueLongStr()
 	{
@@ -121,6 +123,7 @@ public class SnowFlakeIdUtils
 
 	/**
 	 * 获取long类型雪花ID
+	 * @return 结果
 	 */
 	public static long uniqueLong()
 	{
@@ -129,6 +132,7 @@ public class SnowFlakeIdUtils
 
 	/**
 	 * 获取String类型雪花ID
+	 * @return 结果
 	 */
 	public static String uniqueLongHex()
 	{

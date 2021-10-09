@@ -69,7 +69,8 @@ public class RestResult<T>
 
 	/**
 	 * 获取正确的结果对象
-	 * @return 对象
+	 * @param <T> 类型
+	 * @return 结果
 	 */
 	public static <T> RestResult<T> ok()
 	{
@@ -89,8 +90,9 @@ public class RestResult<T>
 
 	/**
 	 * 自定义返回结果文本描述
-	 * @param message 文本描述
-	 * @return 对象
+	 * @param message 文本
+	 * @param <T> 类型
+	 * @return 结果
 	 */
 	public static <T> RestResult<T> ok(String message)
 	{
@@ -125,6 +127,7 @@ public class RestResult<T>
 	 * @param code 编码
 	 * @param message 文本描述
 	 * @param data 数据
+	 * @param <T> 类型
 	 * @return 对象
 	 */
 	public static <T> RestResult<T> ok(int code,String message,T data)
@@ -144,6 +147,7 @@ public class RestResult<T>
 
 	/**
 	 * 获取错误的结果对象
+	 * @param <T> 类型
 	 * @return 对象
 	 */
 	public static <T> RestResult<T> error()
@@ -165,6 +169,7 @@ public class RestResult<T>
 	/**
 	 * 自定义返回结果文本描述
 	 * @param message 文本描述
+	 * @param <T> 类型
 	 * @return 对象
 	 */
 	public static <T> RestResult<T> error(String message)
@@ -187,6 +192,7 @@ public class RestResult<T>
 	/**
 	 * 根据Exception来返回结果对象
 	 * @param e 错误对象
+	 * @param <T> 类型
 	 * @return 对象
 	 */
 	public static <T> RestResult<T> error(Exception e)
@@ -198,6 +204,7 @@ public class RestResult<T>
 	 * 自定义返回结果文本描述
 	 * @param code 错误编码
 	 * @param message 文本描述
+	 * @param <T> 类型
 	 * @return 对象
 	 */
 	public static <T> RestResult<T> error(int code,String message)
