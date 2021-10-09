@@ -8,8 +8,6 @@
 常用的工具类的封装
 
 #### 结构描述
-- common
-    - ResultCode 通用的返回结果Bean
 - handler 常用的处理对象，需要创建使用
     - ConfigHandler 配置工具类，包装properties文件及操作
 - lang 基础数据类型工具类
@@ -18,6 +16,12 @@
         - TreeNode 树形对象接口
         - TreeUtils 树形对象的通用工具方法
         - TreeNodeParser 树形对象的解析接口
+    - page 分页数据结果封装
+        - PageResult 分页数据结果
+        - PageResultUtils 分页数据通用工具方法
+        - PageResultParser 分页数据解析接口
+    - rest rest接口结果封装
+        - RestResult 通用的返回结果Bean
 - security 安全相关的工具类
     - DESUtils des算法加解密的工具类
     - MD5Utils md5算法加解密的工具类
@@ -45,7 +49,7 @@
 <dependency>
   <groupId>top.guokaicn</groupId>
   <artifactId>gk-tools</artifactId>
-  <version>1.0.10</version>
+  <version>1.0.11</version>
 </dependency>
 ```
 

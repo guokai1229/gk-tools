@@ -33,7 +33,7 @@ public class PageResultUtils
      * @param <E> 要转换的类型
      * @return 结果
      */
-    public static <T, E> PageResult<T> createPage(Page<E> page, Class<T> tClass, PageResultItemParser<E,T> parser)
+    public static <T, E> PageResult<T> createPage(Page<E> page, Class<T> tClass, PageResultParser<E,T> parser)
     {
         PageResult<T> result = new PageResult<T>();
 
