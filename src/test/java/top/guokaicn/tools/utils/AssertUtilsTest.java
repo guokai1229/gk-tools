@@ -147,4 +147,46 @@ public class AssertUtilsTest
             System.out.println(e.getMessage());
         }
     }
+
+    @Test
+    public void notBlank()
+    {
+        try
+        {
+            AssertUtils.notBlank("123123","字符串格式错误");
+            AssertUtils.notBlank(null, "字符串格式错误");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void notEquals()
+    {
+        try
+        {
+            AssertUtils.notEquals("123123","33333","字符串格式错误");
+            AssertUtils.notEquals("123123","123123", "字符串格式错误");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testEquals()
+    {
+        try
+        {
+            AssertUtils.equals("123123","123123", "字符串格式错误");
+            AssertUtils.equals("123123","33333","字符串格式错误");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
 }

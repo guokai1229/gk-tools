@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class JSONUtils
 {
-	private static volatile ObjectMapper mapper;
+	private static final ObjectMapper mapper;
 
 	//初始化ObjectMapper
 	static
