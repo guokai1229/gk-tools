@@ -71,4 +71,50 @@ public class PageResultUtils
 
         return result;
     }
+
+    /**
+     * 创建一个空数据对象
+     * @param <T> 类型
+     * @return 结果
+     */
+    public static <T> PageResult<T> emptyData()
+    {
+        PageResult<T> result = new PageResult<>();
+
+        result.setRows(new ArrayList<>());
+
+        result.setTotal(0);
+
+        result.setTotalPage(0);
+
+        result.setPageIndex(0);
+
+        result.setPageSize(10);
+
+        return result;
+    }
+
+    /**
+     * 创建一个空数据对象
+     * @param data 数据
+     * @param total 总条数
+     * @param pageIndex 当前页
+     * @param pageSize 每页数量
+     * @param <T> 类型
+     * @return 结果
+     */
+    public static <T> PageResult<T> createPage(List<T> data, long total, int pageIndex, int pageSize)
+    {
+        PageResult<T> result = new PageResult<>();
+
+        result.setRows(data);
+
+        result.setTotal(total);
+
+        result.setPageIndex(pageIndex);
+
+        result.setPageSize(pageSize);
+
+        return result;
+    }
 }
