@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 分页结果的使用的工具类
  * @author guokai
  */
 public class PageResultUtils

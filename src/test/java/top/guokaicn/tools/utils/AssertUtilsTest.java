@@ -2,9 +2,7 @@ package top.guokaicn.tools.utils;
 
 import org.junit.Test;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AssertUtilsTest
 {
@@ -50,36 +48,6 @@ public class AssertUtilsTest
             AssertUtils.isFalse(test.get("2"),"false");
 
             AssertUtils.isFalse(test.get("1"),"true");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void isNull()
-    {
-        try
-        {
-            AssertUtils.isNull(new Object(), "notNull");
-
-            AssertUtils.isNull(null, "null");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void notNull()
-    {
-        try
-        {
-            AssertUtils.notNull(new Object(), "notNull");
-
-            AssertUtils.notNull(null, "null");
         }
         catch (Exception e)
         {
@@ -163,6 +131,20 @@ public class AssertUtilsTest
     }
 
     @Test
+    public void isBlank()
+    {
+        try
+        {
+            AssertUtils.isBlank(null, "字符串格式错误");
+            AssertUtils.isBlank("123123","字符串格式错误");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
     public void notEquals()
     {
         try
@@ -188,5 +170,121 @@ public class AssertUtilsTest
         {
             System.out.println(e.getMessage());
         }
+    }
+
+
+    @Test
+    public void notEmpty()
+    {
+        try
+        {
+            Map<String,String> test = new HashMap<>();
+
+            test.put("11","22");
+            test.put("22","22");
+
+            AssertUtils.notEmpty(test,"数据为空");
+
+            test = null;
+
+            AssertUtils.notEmpty(test,"数据为空");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testNotEmpty()
+    {
+        try
+        {
+            List<String> test = new ArrayList<>();
+
+            test.add("11");
+            test.add("22");
+
+            AssertUtils.notEmpty(test,"数据为空");
+
+            test = null;
+
+            AssertUtils.notEmpty(test,"数据为空");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    @Test
+    public void isPhone()
+    {
+        try
+        {
+            AssertUtils.isPhone("13444444444","非电话号码");
+
+            AssertUtils.isPhone("233333","非电话号码");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void isEmail()
+    {
+        try
+        {
+            AssertUtils.isEmail("gggg@13.com","非邮件");
+
+            AssertUtils.isEmail("233333","非邮件");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void isUrl()
+    {
+        try
+        {
+            AssertUtils.isUrl("http://www.baidu.com","非url");
+
+            AssertUtils.isUrl("233333","非url");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testIsDate()
+    {
+        try
+        {
+            AssertUtils.isDate("34234234","非日期");
+
+            AssertUtils.isDate("2012-01-22 00:00:00","非日期");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void isIdentity()
+    {
+    }
+
+    @Test
+    public void isIdentityStrong()
+    {
     }
 }

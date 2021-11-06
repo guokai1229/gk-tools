@@ -22,6 +22,8 @@
         - PageResultParser 分页数据解析接口
     - rest rest接口结果封装
         - RestResult 通用的返回结果Bean
+        - RestResultUtils 通用的返回工具方法
+        - RestResultAccessException 通用的返回错误
 - security 安全相关的工具类
     - DESUtils des算法加解密的工具类
     - MD5Utils md5算法加解密的工具类
