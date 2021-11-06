@@ -1,8 +1,8 @@
 package top.guokaicn.tools.lang.rest;
 
 /**
- * @author guokai
- * @date 2021/11/5 18:05
+ * RestResult访问错误
+ * @author guokai 2021/11/5 18:05
  */
 public class RestResultAccessException extends RuntimeException
 {

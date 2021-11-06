@@ -128,6 +128,7 @@ public class RestResult<T>
 	 * 自定义返回结果文本描述
 	 * @param code 编码
 	 * @param message 文本描述
+	 * @param <T> 类型
 	 * @return 对象
 	 */
 	@Deprecated

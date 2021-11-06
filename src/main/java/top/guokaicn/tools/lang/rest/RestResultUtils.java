@@ -4,8 +4,7 @@ import java.util.Optional;
 
 /**
  * RestResult使用工具类
- * @author guokai
- * @date 2021/11/6 9:20
+ * @author guokai 2021/11/6 9:20
  */
 public class RestResultUtils
 {
@@ -84,6 +83,7 @@ public class RestResultUtils
      * 自定义返回结果文本描述
      * @param code 编码
      * @param message 文本描述
+     * @param <T> 类型
      * @return 对象
      */
     public static <T> RestResult<T> ok(int code,String message)

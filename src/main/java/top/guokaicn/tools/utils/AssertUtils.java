@@ -331,6 +331,8 @@ public class AssertUtils
 
     /**
      * 是否是身份证(强校验)
+     * @param identity 号码
+     * @param message 信息
      */
     public static void isIdentityStrong(String identity,String message)
     {
