@@ -8,10 +8,37 @@ import java.util.List;
  */
 public class PageResult<T>
 {
+    /**
+     * 是否成功标识
+     */
+    private Boolean success;
+    /**
+     * 结果编码
+     */
+    private Integer code;
+    /**
+     * 信息文本
+     */
+    private String message;
+    /**
+     * 当前页
+     */
     private int pageIndex;
+    /**
+     * 每页数量
+     */
     private int pageSize;
+    /**
+     * 总数
+     */
     private long total;
+    /**
+     * 总页数
+     */
     private int totalPage;
+    /**
+     * 数据
+     */
     private List<T> rows;
 
     public int getPageIndex()
@@ -62,5 +89,35 @@ public class PageResult<T>
     public void setRows(List<T> rows)
     {
         this.rows = rows;
+    }
+
+    public Boolean getSuccess()
+    {
+        return success;
+    }
+
+    public void setSuccess(Boolean success)
+    {
+        this.success = success;
+    }
+
+    public Integer getCode()
+    {
+        return code;
+    }
+
+    public void setCode(Integer code)
+    {
+        this.code = code;
+    }
+
+    public String getMessage()
+    {
+        return message;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
     }
 }

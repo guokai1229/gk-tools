@@ -11,6 +11,33 @@ import java.util.List;
 public class PageResultUtils
 {
     /**
+     * 编码枚举对象
+     */
+    private enum CODE
+    {
+        SUCCESS_CODE(200, "成功"),
+        ERROR_CODE(500, "错误");
+
+        private final int code;
+        private final String description;
+
+        CODE(int code, String message)
+        {
+            this.code = code;
+            this.description = message;
+        }
+
+        public int getCode()
+        {
+            return code;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+    }
+    /**
      * 创建page对象
      * @param page jpa对象
      * @param tClass 要转换的类型
@@ -45,7 +72,7 @@ public class PageResultUtils
 
             result.setTotalPage(page.getTotalPages());
 
-            result.setPageSize(page.getNumber() + 1);
+            result.setPageIndex(page.getNumber() + 1);
 
             result.setPageSize(page.getSize());
 
@@ -64,10 +91,20 @@ public class PageResultUtils
             }
 
             result.setRows(rows);
+
+            result.setCode(CODE.SUCCESS_CODE.code);
+
+            result.setSuccess(true);
+
+            result.setMessage(CODE.SUCCESS_CODE.description);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            result.setCode(CODE.ERROR_CODE.code);
+
+            result.setSuccess(false);
+
+            result.setMessage(e.getMessage());
         }
 
         return result;
@@ -91,6 +128,29 @@ public class PageResultUtils
         result.setPageIndex(0);
 
         result.setPageSize(10);
+
+        return result;
+    }
+
+    public static <T> PageResult<T> errorData(Exception e)
+    {
+        PageResult<T> result = new PageResult<>();
+
+        result.setRows(new ArrayList<>());
+
+        result.setTotal(0);
+
+        result.setTotalPage(0);
+
+        result.setPageIndex(0);
+
+        result.setPageSize(10);
+
+        result.setCode(CODE.ERROR_CODE.code);
+
+        result.setSuccess(false);
+
+        result.setMessage(e.getMessage());
 
         return result;
     }
